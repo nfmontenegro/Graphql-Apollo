@@ -1,0 +1,11 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Server of the App",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "author": "Nicolás Flores Montenegro",
+  "license": "ISC"
+}

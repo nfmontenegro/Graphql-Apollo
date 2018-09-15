@@ -4,8 +4,24 @@
   "description": "Server of the App",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
+    "start:dev": "nodemon src/index.js --exec babel-node",
     "test": "npm test"
   },
   "author": "Nicolás Flores Montenegro",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^6.0.0",
+    "graphql-tools": "^3.1.1",
+    "graphql-yoga": "^1.16.2",
+    "merge-graphql-schemas": "^1.5.4",
+    "mongoose": "^5.2.14"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.7.0",
+    "nodemon": "^1.18.4"
+  }
 }

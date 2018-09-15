@@ -1,0 +1,23 @@
+type Query {
+  users: [User!]!,
+  user(_id: String!): User
+}
+
+type Mutation {
+  deleteUser(_id: String!): String,
+  insertUser(
+    name: String!, 
+    lastname: String!, 
+    email: String!, 
+    password: String!
+  ): User!
+}
+
+# Schema Types
+type User {
+  name: String!
+  lastname: String!
+  email: String!
+  password: String!
+  createdOn: String!
+}

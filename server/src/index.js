@@ -13,10 +13,11 @@ const db = initDB({
 const server = new GraphQLServer({
   typeDefs,
   resolvers,
-  context: {
+  context: req => ({
+    ...req,
     db,
     models
-  }
+  })
 })
 
 const PORT = process.env.SERVER_PORT || 3000
@@ -26,5 +27,8 @@ const opts = {
 }
 
 server.start(opts, () => {
+  console.log('##########################################################')
+  console.log('#####               STARTING SERVER                  #####')
+  console.log('##########################################################\n')
   console.log(`=> Server is running on: http://localhost:${PORT}`)
 })

@@ -6,7 +6,7 @@ type Query {
 type Mutation {
   deleteUser(_id: String!): String,
 
-  insertUser(
+  registerUser(
     name: String!, 
     lastname: String!, 
     email: String!, 
@@ -19,6 +19,11 @@ type Mutation {
     lastname: String,
     email: String
   ): User!
+
+  loginUser (
+    email: String!, 
+    password: String!
+  ): String
 }
 
 # Schema Types

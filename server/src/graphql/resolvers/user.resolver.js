@@ -3,35 +3,39 @@ import jwt from 'jsonwebtoken'
 
 export default {
   Query: {
-    listUsers: async (_, params, {models: {User}, req}) => {
-      console.log('Context:', req)
-      // console.log('Request:', req)
-      // return await User.find({})
+    listUsers: async (_, params, {models: {User}, request: {userAccess}}) => {
+      if (!userAccess) throw new Error(`Don't have permissions`)
+      return await User.find({})
     },
 
-    user: async (_, params, {models: {User}, request}) => {
-      console.log('Headers,', request.headers)
-      const user = await User.findById(params)
+    user: async (_, {_id}, {models: {User}, request: {userAccess}}) => {
+      if (!userAccess) throw new Error(`Don't have permissions`)
+
+      const user = await User.findById({_id})
       if (user) return user
-      throw new Error(`No user with that id: ${params._id}`)
+      throw new Error(`No user with that id: ${_id}`)
     }
   },
 
   Mutation: {
-    deleteUser: async (_, params, {models: {User}}) => {
-      const user = await User.findOneAndDelete(params)
-      if (user) return `User removed ${params._id}`
-      throw new Error(`No user with that id: ${params._id}`)
+    deleteUser: async (_, {_id}, {models: {User}}) => {
+      const user = await User.findOneAndDelete({_id})
+      if (user) return `User removed ${_id}`
+      throw new Error(`No user with that id: ${_id}`)
     },
 
-    registerUser: async (_, params, {models: {User}}) => {
+    registerUser: async (
+      _,
+      {name, lastname, email, password},
+      {models: {User}, request: {userAccess}}
+    ) => {
+      if (!userAccess) throw new Error(`Don't have permissions`)
+
       const user = await User.findOne({
-        email: params.email
+        email
       })
 
       if (!user) {
-        const {name, lastname, email, password} = params
-
         const user = await User.create({
           name,
           lastname,
@@ -40,11 +44,11 @@ export default {
         })
         return user
       } else {
-        throw new Error(`User exist with email ${params.email}`)
+        throw new Error(`User exist with email ${email}`)
       }
     },
 
-    loginUser: async (_, {email, password}, {models: {User}, req}) => {
+    loginUser: async (_, {email, password}, {models: {User}}) => {
       const user = await User.findOne({
         email
       })
@@ -59,7 +63,7 @@ export default {
         throw new Error('Incorrect password')
       }
 
-      const token = jwt.sign(
+      return jwt.sign(
         {
           id: user._id,
           email: user.email
@@ -69,13 +73,14 @@ export default {
           expiresIn: '1y'
         }
       )
-
-      req.token = token
-      return token
     },
 
-    updateUser: async (_, params, {models: {User}}) => {
-      const {_id, ...rest} = params
+    updateUser: async (
+      _,
+      {_id, ...rest},
+      {models: {User}, request: {userAccess}}
+    ) => {
+      if (!userAccess) throw new Error(`Don't have permissions`)
 
       await User.findOneAndUpdate(
         {

@@ -20,13 +20,18 @@ type Mutation {
     email: String
   ): User!
 
-  loginUser (
+  payloadLoginUser (
     email: String!, 
     password: String!
-  ): String
+  ): AuthPayload
 }
 
 # Schema Types
+type AuthPayload {
+  token: String
+  user: User
+}
+
 type User {
   name: String!
   lastname: String!
@@ -34,3 +39,4 @@ type User {
   password: String!
   createdOn: String!
 }
+

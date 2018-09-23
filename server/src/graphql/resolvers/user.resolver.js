@@ -48,7 +48,12 @@ export default {
       }
     },
 
-    loginUser: async (_, {email, password}, {models: {User}}) => {
+    payloadLoginUser: async (
+      _,
+      {email, password},
+      {models: {User}, ...rest}
+    ) => {
+      console.log('Rest:', rest)
       const user = await User.findOne({
         email
       })
@@ -60,10 +65,10 @@ export default {
       const valid = await bcrypt.compare(password, user.password)
 
       if (!valid) {
-        throw new Error('Incorrect password')
+        throw new Error('Invalid Password')
       }
 
-      return jwt.sign(
+      const token = jwt.sign(
         {
           id: user._id,
           email: user.email
@@ -73,6 +78,7 @@ export default {
           expiresIn: '1y'
         }
       )
+      return {user, token}
     },
 
     updateUser: async (

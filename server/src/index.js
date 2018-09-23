@@ -11,20 +11,6 @@ const db = initDB({
   url: process.env.DB_HOST
 })
 
-const addUser = async (req, res, next) => {
-  try {
-    const token = req.headers.authorization
-    if (token) {
-      const {email} = await jwt.verify(token, process.env.SECRET_PASSWORD)
-      req.userAccess = email
-    }
-    next()
-  } catch (err) {
-    //validate error in the resolver
-    next()
-  }
-}
-
 const server = new GraphQLServer({
   typeDefs,
   resolvers,
@@ -36,7 +22,22 @@ const server = new GraphQLServer({
   })
 })
 
-server.express.use(addUser)
+server.express.use(async (req, res, next) => {
+  try {
+    const token = req.headers.authorization
+
+    if (token) {
+      const bearer = token.split(' ')
+      const bearerToken = bearer[1]
+      const {email} = await jwt.verify(bearerToken, process.env.SECRET_PASSWORD)
+      req.userAccess = email
+    }
+    next()
+  } catch (err) {
+    //validate error in the resolver
+    next()
+  }
+})
 
 const PORT = process.env.SERVER_PORT || 3000
 

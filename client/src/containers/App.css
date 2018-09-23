@@ -1,0 +1,9 @@
+@import '~antd/dist/antd.css';
+
+.ant-btn-primary {
+  background-color: #0f2ff1
+}
+
+.ant-menu-horizontal {
+  text-align: right
+}

@@ -4,8 +4,6 @@ import {NavigatorContainer} from './NavigatorContainer'
 import ApolloClient from 'apollo-boost'
 import {InMemoryCache} from 'apollo-cache-inmemory'
 import {ApolloProvider} from 'react-apollo'
-import {setContext} from 'apollo-link-context'
-import {createHttpLink} from 'apollo-link-http'
 import {BrowserRouter as Router, withRouter} from 'react-router-dom'
 
 import './App.css'

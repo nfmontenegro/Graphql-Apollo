@@ -8,12 +8,12 @@ export default {
       return await User.find({})
     },
 
-    user: async (_, {_id}, {models: {User}, request: {userAccess}}) => {
+    user: async (_, {token}, {models: {User}, request: {userAccess}}) => {
       if (!userAccess) throw new Error(`Don't have permissions`)
-
-      const user = await User.findById({_id})
+      const {id} = jwt.decode(token, process.env.SECRET_PASSWORD)
+      const user = await User.findById({_id: id})
       if (user) return user
-      throw new Error(`No user with that id: ${_id}`)
+      throw new Error(`No user with that id: ${id}`)
     },
 
     checkToken: async (_, params, {request: {userAccess}}) => {

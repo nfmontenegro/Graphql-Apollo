@@ -18,11 +18,6 @@ class SignInForm extends React.Component {
     })
   }
 
-  onClose = () => {
-    this.setState({email: 'nuevo@gmail.com'})
-    console.log('On close!')
-  }
-
   handleSubmit = async (event, payloadLoginUser) => {
     event.preventDefault()
     try {

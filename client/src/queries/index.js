@@ -9,6 +9,17 @@ export const TOKEN = gql`
   }
 `
 
+export const USER = gql`
+  query USER($token: String!) {
+    user(token: $token) {
+      name
+      lastname
+      email
+      password
+    }
+  }
+`
+
 export const SIGN_IN = gql`
   mutation SIGN_IN($email: String!, $password: String!) {
     payloadLoginUser(email: $email, password: $password) {

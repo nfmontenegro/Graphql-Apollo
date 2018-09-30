@@ -1,6 +1,6 @@
 type Query {
   listUsers: [User!]!,
-  user(_id: String!): User
+  user(token: String!): User
   checkToken: VerifyToken!
 }
 

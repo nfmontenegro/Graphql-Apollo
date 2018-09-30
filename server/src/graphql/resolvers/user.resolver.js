@@ -14,6 +14,11 @@ export default {
       const user = await User.findById({_id})
       if (user) return user
       throw new Error(`No user with that id: ${_id}`)
+    },
+
+    checkToken: async (_, params, {request: {userAccess}}) => {
+      if (!userAccess) throw new Error(`Don't have permissions`)
+      return {status: 200, message: 'Success token'}
     }
   },
 
@@ -53,7 +58,6 @@ export default {
       {email, password},
       {models: {User}, ...rest}
     ) => {
-      console.log('Rest:', rest)
       const user = await User.findOne({
         email
       })
@@ -78,7 +82,7 @@ export default {
           expiresIn: '1y'
         }
       )
-      return {user, token}
+      return {user, token, status: 200}
     },
 
     updateUser: async (

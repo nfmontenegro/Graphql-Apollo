@@ -1,6 +1,7 @@
 type Query {
   listUsers: [User!]!,
   user(_id: String!): User
+  checkToken: VerifyToken!
 }
 
 type Mutation {
@@ -29,7 +30,8 @@ type Mutation {
 # Schema Types
 type AuthPayload {
   token: String
-  user: User
+  user: User,
+  status: String
 }
 
 type User {
@@ -40,3 +42,7 @@ type User {
   createdOn: String!
 }
 
+type VerifyToken {
+  message: String,
+  status: String
+}

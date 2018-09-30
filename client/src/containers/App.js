@@ -1,11 +1,10 @@
 import React from 'react'
-
-import {NavigatorContainer} from './NavigatorContainer'
 import ApolloClient from 'apollo-boost'
 import {InMemoryCache} from 'apollo-cache-inmemory'
 import {ApolloProvider} from 'react-apollo'
 import {BrowserRouter as Router, withRouter} from 'react-router-dom'
 
+import NavigatorContainer from './NavigatorContainer'
 import './App.css'
 
 const cache = new InMemoryCache()

@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "start:dev": "nodemon src/index.js --exec babel-node",
+    "reinstall": "rm -rf ./node_modules && npm install",
     "test": "npm test"
   },
   "author": "Nicolás Flores Montenegro",

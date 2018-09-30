@@ -1,5 +1,14 @@
 import gql from 'graphql-tag'
 
+export const TOKEN = gql`
+  query TOKEN {
+    checkToken {
+      status
+      message
+    }
+  }
+`
+
 export const SIGN_IN = gql`
   mutation SIGN_IN($email: String!, $password: String!) {
     payloadLoginUser(email: $email, password: $password) {

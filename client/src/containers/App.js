@@ -10,7 +10,7 @@ import './App.css'
 const cache = new InMemoryCache()
 
 const client = new ApolloClient({
-  uri: 'http://localhost:3001',
+  uri: process.env.REACT_APP_SERVER,
   request: operation => {
     const token = localStorage.getItem('token')
     operation.setContext({

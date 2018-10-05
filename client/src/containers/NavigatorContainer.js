@@ -6,6 +6,7 @@ import {withApollo, Query} from 'react-apollo'
 import {SignInFormContainer} from './SignInFormContainer'
 import {HomeContainer} from './HomeContainer'
 import {UserContainer} from './UserContainer'
+import {RegisterFormContainer} from './RegisterFormContainer'
 
 import withAuth from '../HOC/withAuth'
 import {USER} from '../queries'
@@ -14,7 +15,7 @@ const NavigatorContainer = ({history, client}) => {
   const logout = () => {
     client.resetStore()
     localStorage.removeItem('token')
-    history.push('/')
+    history.push('/signin')
   }
 
   const SubMenu = Menu.SubMenu
@@ -66,6 +67,13 @@ const NavigatorContainer = ({history, client}) => {
         )}
 
         {!token && (
+          <Menu.Item key="user" onClick={() => history.push('/register')}>
+            <Icon type="user" />
+            Register
+          </Menu.Item>
+        )}
+
+        {!token && (
           <Menu.Item key="login" onClick={() => history.push('/signin')}>
             <Icon type="login" />
             Login
@@ -75,6 +83,7 @@ const NavigatorContainer = ({history, client}) => {
 
       <Route exact path="/" component={HomeContainer} />
       <Route path="/signin" component={SignInFormContainer} />
+      <Route path="/register" component={RegisterFormContainer} />
       <Route path="/users" component={withAuth(UserContainer)} />
     </div>
   )

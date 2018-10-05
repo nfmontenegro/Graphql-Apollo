@@ -46,8 +46,7 @@ const opts = {
 }
 
 server.start(opts, () => {
-  console.log('##########################################################')
-  console.log('#####               STARTING SERVER                  #####')
-  console.log('##########################################################\n')
-  console.log(`=> Server is running on: http://localhost:${PORT}`)
+  console.log('\n')
+  console.log('=> Starting server..')
+  console.log(`=> GraphiQL running on: http://localhost:${PORT}`)
 })

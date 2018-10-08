@@ -1,5 +1,5 @@
 import React from 'react'
-import FormHoc from '../HOC/FormHoc'
+import FormHoc from './Form'
 
 class RegisterForm extends React.Component {
   state = {

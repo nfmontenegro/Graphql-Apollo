@@ -7,6 +7,7 @@ import {SignInFormContainer} from './SignInFormContainer'
 import {HomeContainer} from './HomeContainer'
 import {UserContainer} from './UserContainer'
 import {RegisterFormContainer} from './RegisterFormContainer'
+import {RegisterFormContainer2} from './RegisterFormContainer2'
 
 import withAuth from '../HOC/withAuth'
 import {USER} from '../queries'
@@ -74,6 +75,13 @@ const NavigatorContainer = ({history, client}) => {
         )}
 
         {!token && (
+          <Menu.Item key="user2" onClick={() => history.push('/register2')}>
+            <Icon type="user2" />
+            Register2
+          </Menu.Item>
+        )}
+
+        {!token && (
           <Menu.Item key="login" onClick={() => history.push('/signin')}>
             <Icon type="login" />
             Login
@@ -84,6 +92,7 @@ const NavigatorContainer = ({history, client}) => {
       <Route exact path="/" component={HomeContainer} />
       <Route path="/signin" component={SignInFormContainer} />
       <Route path="/register" component={RegisterFormContainer} />
+      <Route path="/register2" component={RegisterFormContainer2} />
       <Route path="/users" component={withAuth(UserContainer)} />
     </div>
   )

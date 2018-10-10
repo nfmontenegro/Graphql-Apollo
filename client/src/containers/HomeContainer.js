@@ -1,3 +1,5 @@
 import React from 'react'
 
-export const HomeContainer = () => <div>Home Component</div>
+export function HomeContainer() {
+  return <div>Home Component</div>
+}

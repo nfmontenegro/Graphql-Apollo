@@ -23,9 +23,12 @@ export default {
   },
 
   Mutation: {
-    deleteUser: async (_, {_id}, {models: {User}}) => {
+    deleteUser: async (_, {_id}, {models: {User}, request: {userAccess}}) => {
+      if (!userAccess) throw new Error(`Don't have permissions`)
+
       const user = await User.findOneAndDelete({_id})
       if (user) return `User removed ${_id}`
+
       throw new Error(`No user with that id: ${_id}`)
     },
 
@@ -34,8 +37,6 @@ export default {
       {name, lastname, email, password},
       {models: {User}, request: {userAccess}}
     ) => {
-      if (!userAccess) throw new Error(`Don't have permissions`)
-
       const user = await User.findOne({
         email
       })

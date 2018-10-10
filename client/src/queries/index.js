@@ -44,3 +44,24 @@ export const LIST_USERS = gql`
     }
   }
 `
+
+export const REGISTER_USER = gql`
+  mutation REGISTER_USER(
+    $name: String!
+    $lastname: String!
+    $email: String!
+    $password: String!
+  ) {
+    registerUser(
+      name: $name
+      lastname: $lastname
+      email: $email
+      password: $password
+    ) {
+      name
+      lastname
+      email
+      password
+    }
+  }
+`

@@ -1,22 +1,55 @@
 import React from 'react'
+import {Form, Icon, Input, Button} from 'antd'
 
-function FormHoc(WrappedComponent) {
+const FormItem = Form.Item
+
+const withForm = fields => WrappedComponent => {
   return class Form extends React.Component {
     state = {}
 
     onChange = event => {
-      event.preventDefault()
+      const {name, value} = event.target
       this.setState({
-        fields: {
-          [event.target.name]: event.target.value
-        }
+        [name]: value
       })
     }
 
+    renderFields = () => (
+      <div>
+        {fields.map(({type, name, placeholder}, index) => (
+          <FormItem key={index}>
+            <Input
+              prefix={<Icon type={type} style={{color: 'rgba(0,0,0,.25)'}} />}
+              type={name}
+              name={name}
+              placeholder={placeholder}
+              onChange={this.onChange}
+            />
+          </FormItem>
+        ))}
+        <FormItem>
+          <Button
+            style={{width: '100%'}}
+            type="primary"
+            htmlType="submit"
+            className="login-form-button"
+          >
+            Register
+          </Button>
+        </FormItem>
+      </div>
+    )
+
     render() {
-      return <WrappedComponent onChange={this.onChange} state={this.state} />
+      return (
+        <WrappedComponent
+          {...this.props}
+          renderFields={this.renderFields}
+          fields={this.state}
+        />
+      )
     }
   }
 }
 
-export default FormHoc
+export default withForm

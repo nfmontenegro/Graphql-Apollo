@@ -1,11 +1,11 @@
 type Query {
-  listUsers: [User!]!,
+  listUsers: [User!]!
   user(token: String!): User
   checkToken: VerifyToken!
 }
 
 type Mutation {
-  deleteUser(_id: String!): String,
+  deleteUser(_id: String!): String
 
   registerUser(
     name: String!, 

@@ -1,8 +1,8 @@
 import {GraphQLServer} from 'graphql-yoga'
 import {initDB, models} from './db'
+import jwt from 'jsonwebtoken'
 import {default as typeDefs} from './graphql/typeDefs'
 import {default as resolvers} from './graphql/resolvers'
-import jwt from 'jsonwebtoken'
 
 require('dotenv').config()
 
@@ -25,7 +25,6 @@ const server = new GraphQLServer({
 server.express.use(async (req, res, next) => {
   try {
     const token = req.headers.authorization
-
     if (token) {
       const bearer = token.split(' ')
       const bearerToken = bearer[1]
@@ -34,6 +33,7 @@ server.express.use(async (req, res, next) => {
     }
     next()
   } catch (err) {
+    console.log('Err:', err)
     //validate error in the resolver
     next()
   }

@@ -2,9 +2,9 @@ import React from 'react'
 import {compose} from 'recompose'
 import {Form, Row, Col, Card, message} from 'antd'
 import {Mutation} from 'react-apollo'
-import {SIGN_IN} from '../queries'
+import {SIGN_IN} from '../../queries'
 
-import withForm from '../HOC/withForm'
+import withForm from '../../HOC/withForm'
 
 function SignInForm({renderFields, fields, history}) {
   const onSubmit = async (event, submit) => {

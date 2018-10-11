@@ -7,3 +7,11 @@
 .ant-menu-horizontal {
   text-align: right
 }
+
+.ant-menu {
+  box-shadow: 0 2px 8px #f0f1f2;
+}
+
+.ant-card { 
+  box-shadow: 0 2px 8px #f0f1f2;
+}

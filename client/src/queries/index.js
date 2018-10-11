@@ -12,6 +12,7 @@ export const TOKEN = gql`
 export const USER = gql`
   query USER($token: String!) {
     user(token: $token) {
+      _id
       name
       lastname
       email
@@ -25,6 +26,7 @@ export const SIGN_IN = gql`
     payloadLoginUser(email: $email, password: $password) {
       token
       user {
+        _id
         name
         lastname
         email
@@ -37,6 +39,7 @@ export const SIGN_IN = gql`
 export const LIST_USERS = gql`
   query LIST_USERS {
     listUsers {
+      _id
       name
       lastname
       email
@@ -58,6 +61,7 @@ export const REGISTER_USER = gql`
       email: $email
       password: $password
     ) {
+      _id
       name
       lastname
       email

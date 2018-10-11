@@ -35,6 +35,7 @@ type AuthPayload {
 }
 
 type User {
+  _id: String!
   name: String!
   lastname: String!
   email: String!

@@ -2,9 +2,9 @@ import React from 'react'
 import {compose} from 'recompose'
 import {Form, Row, Col, Card, message} from 'antd'
 import {Mutation} from 'react-apollo'
-import {REGISTER_USER} from '../queries'
+import {REGISTER_USER} from '../../queries'
 
-import withForm from '../HOC/withForm'
+import withForm from '../../HOC/withForm'
 
 function RegisterForm({renderFields, fields, history}) {
   const onSubmit = async (event, submit) => {

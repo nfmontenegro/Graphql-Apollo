@@ -1,6 +1,8 @@
 import React from 'react'
-import SignInForm from '../components/SignInForm'
+import SignInForm from '../components/Login/SignInForm'
 
-export function SignInFormContainer(props) {
+function SignInFormContainer(props) {
   return <SignInForm {...props} />
 }
+
+export default SignInFormContainer

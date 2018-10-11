@@ -1,12 +1,14 @@
 import React from 'react'
-import {Route} from 'react-router-dom'
+import {compose} from 'recompose'
+import {Route, withRouter} from 'react-router-dom'
 import {Menu, Icon} from 'antd'
 import {withApollo, Query} from 'react-apollo'
 
-import {SignInFormContainer} from './SignInFormContainer'
+import SignInFormContainer from './SignInFormContainer'
+import ProfileContainer from './ProfileContainer'
 import {HomeContainer} from './HomeContainer'
 import {UserContainer} from './UserContainer'
-import {RegisterFormContainer} from './RegisterFormContainer'
+import RegisterFormContainer from './RegisterFormContainer'
 
 import withAuth from '../HOC/withAuth'
 import {USER} from '../queries'
@@ -33,8 +35,8 @@ const NavigatorContainer = ({history, client}) => {
         )}
 
         {token && (
-          <Menu.Item key="down" onClick={() => history.push('/users')}>
-            <Icon type="down" />
+          <Menu.Item key="usergroup-add" onClick={() => history.push('/users')}>
+            <Icon type="usergroup-add" />
             Users
           </Menu.Item>
         )}
@@ -58,7 +60,12 @@ const NavigatorContainer = ({history, client}) => {
             }
           >
             <MenuItemGroup>
-              <Menu.Item key="setting:1">Profile</Menu.Item>
+              <Menu.Item
+                key="setting:1"
+                onClick={() => history.push('/profile')}
+              >
+                Profile
+              </Menu.Item>
               <Menu.Item key="logout" onClick={logout}>
                 Logout
               </Menu.Item>
@@ -85,8 +92,12 @@ const NavigatorContainer = ({history, client}) => {
       <Route path="/signin" component={SignInFormContainer} />
       <Route path="/register" component={RegisterFormContainer} />
       <Route path="/users" component={withAuth(UserContainer)} />
+      <Route path="/profile" component={withAuth(ProfileContainer)} />
     </div>
   )
 }
 
-export default withApollo(NavigatorContainer)
+export default compose(
+  withRouter,
+  withApollo
+)(NavigatorContainer)

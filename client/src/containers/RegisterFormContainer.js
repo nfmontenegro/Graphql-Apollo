@@ -1,6 +1,8 @@
 import React from 'react'
-import RegisterForm from '../components/RegisterForm'
+import RegisterForm from '../components/Login/RegisterForm'
 
-export function RegisterFormContainer(props) {
+function RegisterFormContainer(props) {
   return <RegisterForm {...props} />
 }
+
+export default RegisterFormContainer

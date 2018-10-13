@@ -3,7 +3,7 @@ import {Form, Icon, Input, Button} from 'antd'
 
 const FormItem = Form.Item
 
-const withForm = fields => WrappedComponent => {
+const withForm = ({fieldTypes, buttonText}) => WrappedComponent => {
   return class Form extends React.Component {
     state = {}
 
@@ -16,7 +16,7 @@ const withForm = fields => WrappedComponent => {
 
     renderFields = () => (
       <div>
-        {fields.map(({type, name, placeholder}, index) => (
+        {fieldTypes.map(({type, name, placeholder}, index) => (
           <FormItem key={index}>
             <Input
               prefix={<Icon type={type} style={{color: 'rgba(0,0,0,.25)'}} />}
@@ -34,7 +34,7 @@ const withForm = fields => WrappedComponent => {
             htmlType="submit"
             className="login-form-button"
           >
-            Register
+            {buttonText}
           </Button>
         </FormItem>
       </div>

@@ -44,11 +44,14 @@ function RegisterForm({renderFields, fields, history}) {
   )
 }
 
-const fields = [
-  {type: 'user', name: 'name', placeholder: 'Name'},
-  {type: 'user', name: 'lastname', placeholder: 'Last Name'},
-  {type: 'inbox', name: 'email', placeholder: 'Email'},
-  {type: 'lock', name: 'password', placeholder: 'Password'}
-]
+const fields = {
+  fieldTypes: [
+    {type: 'user', name: 'name', placeholder: 'Name'},
+    {type: 'user', name: 'lastname', placeholder: 'Last Name'},
+    {type: 'inbox', name: 'email', placeholder: 'Email'},
+    {type: 'lock', name: 'password', placeholder: 'Password'}
+  ],
+  buttonText: 'Register'
+}
 
 export default compose(withForm(fields))(RegisterForm)

@@ -46,9 +46,11 @@ function SignInForm({renderFields, fields, history}) {
   )
 }
 
-const fields = [
-  {type: 'inbox', name: 'email', placeholder: 'Email'},
-  {type: 'lock', name: 'password', placeholder: 'Password'}
-]
-
+const fields = {
+  fieldTypes: [
+    {type: 'inbox', name: 'email', placeholder: 'Email'},
+    {type: 'lock', name: 'password', placeholder: 'Password'}
+  ],
+  buttonText: 'Sign In'
+}
 export default compose(withForm(fields))(SignInForm)

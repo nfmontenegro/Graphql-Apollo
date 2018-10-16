@@ -36,6 +36,10 @@ function SignInForm({renderFields, fields, history}) {
               <Card>
                 <Form onSubmit={e => onSubmit(e, payloadLoginUser)}>
                   {renderFields()}
+                  <a className="login-form-forgot" href="">
+                    Forgot password
+                  </a>
+                  Or <a href="/register">register now!</a>
                 </Form>
               </Card>
             </Col>

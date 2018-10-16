@@ -12,19 +12,13 @@ function UserProfile({history}) {
     <React.Fragment>
       <Query query={USER} variables={{token}}>
         {({loading, error, data}) => {
-          if (loading) return loading
+          if (loading) return 'Loading...'
           if (error) return 'Something went wrong!'
           return (
             <Row style={{marginTop: '70px'}}>
               <Col span={7} offset={8}>
                 <Card
                   style={{width: 500}}
-                  cover={
-                    <img
-                      alt="example"
-                      src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                    />
-                  }
                   actions={[
                     <Icon
                       type="edit"
@@ -35,9 +29,7 @@ function UserProfile({history}) {
                   ]}
                 >
                   <Meta
-                    avatar={
-                      <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                    }
+                    avatar={<Avatar src={''} />}
                     title={`${data.user.name} ${data.user.lastname}`}
                     description={data.user.email}
                   />

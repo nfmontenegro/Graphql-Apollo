@@ -1,5 +1,5 @@
 import React from 'react'
-import {Switch, Route} from 'react-router-dom'
+import {Route} from 'react-router-dom'
 
 import UserProfile from '../components/Profile/UserProfile'
 import EditUser from '../components/Profile/EditUser'

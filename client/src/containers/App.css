@@ -15,3 +15,8 @@
 .ant-card { 
   box-shadow: 0 2px 8px #f0f1f2;
 }
+
+.ant-avatar {
+  width: 100px;
+  height: 100px;
+}

@@ -1,21 +1,20 @@
 import React from 'react'
 import {Spin} from 'antd'
 import {Query} from 'react-apollo'
-import {Redirect} from 'react-router-dom'
 
-import {TOKEN} from '../queries'
+import {USER} from '../queries'
 
-export default function withAuth(WrappedComponent) {
+export default function withUser(WrappedComponent) {
   return class extends React.Component {
     render() {
+      const token = localStorage.getItem('token')
       return (
-        <Query query={TOKEN}>
-          {({loading, error, data}) => {
+        <Query query={USER} variables={{token}}>
+          {({loading, data}) => {
             if (loading) return <Spin size="large" />
-            if (error) return <Redirect to="/signin" />
             return (
               <React.Fragment>
-                <WrappedComponent {...this.props} />
+                <WrappedComponent {...this.props} user={data.user} />
               </React.Fragment>
             )
           }}

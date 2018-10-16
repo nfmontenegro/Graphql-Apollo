@@ -1,7 +1,7 @@
 import React from 'react'
 import {compose} from 'recompose'
 import {Route, withRouter} from 'react-router-dom'
-import {Menu, Icon} from 'antd'
+import {Menu, Icon, Spin} from 'antd'
 import {withApollo, Query} from 'react-apollo'
 
 import SignInFormContainer from './SignInFormContainer'
@@ -47,7 +47,7 @@ const NavigatorContainer = ({history, client}) => {
               <span className="submenu-title-wrapper">
                 <Query query={USER} variables={{token: token}}>
                   {({loading, data: {user}}) => {
-                    if (loading) return <Icon type="loading" />
+                    if (loading) return <Spin size="large" />
                     return (
                       <div>
                         <Icon type="user" />

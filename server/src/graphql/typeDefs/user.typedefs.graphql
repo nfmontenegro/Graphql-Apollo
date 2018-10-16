@@ -18,7 +18,8 @@ type Mutation {
     _id: String!,
     name: String
     lastname: String,
-    email: String
+    email: String,
+    avatar: String
   ): User!
 
   payloadLoginUser (
@@ -39,6 +40,7 @@ type User {
   name: String!
   lastname: String!
   email: String!
+  avatar: String
   password: String!
   createdOn: String!
 }

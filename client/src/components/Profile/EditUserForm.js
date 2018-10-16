@@ -1,12 +1,14 @@
 import React from 'react'
-import {Button, Form, Icon, Input, message} from 'antd'
+import {Button, Form, Icon, Input, message, Upload} from 'antd'
 
 const FormItem = Form.Item
+
 class EditUserForm extends React.Component {
   state = {
-    _id: this.props.data.user._id,
-    name: this.props.data.user.name,
-    lastname: this.props.data.user.lastname
+    _id: this.props.user._id,
+    name: this.props.user.name,
+    lastname: this.props.user.lastname,
+    file: ''
   }
 
   onChange = event => {
@@ -27,6 +29,16 @@ class EditUserForm extends React.Component {
   }
 
   render() {
+    const props = {
+      beforeUpload: file => {
+        this.setState({file})
+        return false
+      },
+      onRemove: () => {
+        this.setState(prevState => ({...prevState, file: ''}))
+      }
+    }
+    console.log('State:', this.state)
     return (
       <Form onSubmit={event => this.onSubmit(event, this.props.updateUser)}>
         <FormItem>
@@ -47,6 +59,14 @@ class EditUserForm extends React.Component {
             onChange={this.onChange}
           />
         </FormItem>
+        <FormItem>
+          <Upload name="avatar" listType="picture" {...props}>
+            <Button>
+              <Icon type="upload" /> Click to upload
+            </Button>
+          </Upload>
+        </FormItem>
+
         <FormItem>
           <Button
             style={{width: '100%'}}

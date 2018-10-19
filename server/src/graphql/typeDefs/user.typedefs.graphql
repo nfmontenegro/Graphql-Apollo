@@ -8,22 +8,29 @@ type Mutation {
   deleteUser(_id: String!): String
 
   registerUser(
-    name: String!, 
-    lastname: String!, 
-    email: String!, 
+    name: String!
+    lastname: String!
+    email: String!
+    nickname: String
+    phoneNumber: Int
+    website: String
     password: String!
   ): User!
 
-  updateUser(
-    _id: String!,
+  updateUser(   
+    _id: String!
     name: String
-    lastname: String,
-    email: String,
-    avatar: String
+    lastname: String
+    email: String
+    nickname: String
+    phoneNumber: Int
+    website: String
+    file: String
+    imageUrl: String
   ): User!
 
   payloadLoginUser (
-    email: String!, 
+    email: String!
     password: String!
   ): AuthPayload
 }
@@ -31,7 +38,7 @@ type Mutation {
 # Schema Types
 type AuthPayload {
   token: String
-  user: User,
+  user: User
   status: String
 }
 
@@ -40,12 +47,16 @@ type User {
   name: String!
   lastname: String!
   email: String!
-  avatar: String
+  nickname: String
+  phoneNumber: String
+  website: String
+  file: String
+  imageUrl: String
   password: String!
   createdOn: String!
 }
 
 type VerifyToken {
-  message: String,
+  message: String
   status: String
 }

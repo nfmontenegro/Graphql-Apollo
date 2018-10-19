@@ -18,9 +18,24 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  nickname: {
+    type: String
+  },
+  phoneNumber: {
+    type: Number
+  },
+  website: {
+    type: String
+  },
   createdOn: {
     type: Date,
     default: Date.now
+  },
+  file: {
+    type: String
+  },
+  imageUrl: {
+    type: String
   }
 })
 

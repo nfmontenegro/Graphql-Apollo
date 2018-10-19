@@ -14,7 +14,7 @@ function EditUser(props) {
           <Card>
             <Mutation
               mutation={UPDATE_USER}
-              refetchQueries={[
+              refetchQueries={() => [
                 {
                   query: USER,
                   variables: {token}

@@ -10,6 +10,7 @@
     "apollo-link": "^1.2.3",
     "apollo-link-context": "^1.0.9",
     "apollo-link-http": "^1.5.5",
+    "aws-sdk": "^2.338.0",
     "graphql": "^14.0.2",
     "graphql-tag": "^2.9.2",
     "graphql-tools": "^4.0.0",

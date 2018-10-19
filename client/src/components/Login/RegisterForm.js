@@ -48,6 +48,9 @@ const fields = {
   fieldTypes: [
     {type: 'user', name: 'name', placeholder: 'Name'},
     {type: 'user', name: 'lastname', placeholder: 'Last Name'},
+    {type: 'user', name: 'nickname', placeholder: 'Nick Name'},
+    {type: 'user', name: 'website', placeholder: 'Web Site'},
+    {type: 'user', name: 'phoneNumber', placeholder: 'Phone Number'},
     {type: 'inbox', name: 'email', placeholder: 'Email'},
     {type: 'lock', name: 'password', placeholder: 'Password'}
   ],

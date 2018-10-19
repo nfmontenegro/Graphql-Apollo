@@ -1,5 +1,6 @@
 import React from 'react'
 import {Button, Form, Icon, Input, message, Upload} from 'antd'
+import AWS from 'aws-sdk'
 
 const FormItem = Form.Item
 
@@ -8,7 +9,11 @@ class EditUserForm extends React.Component {
     _id: this.props.user._id,
     name: this.props.user.name,
     lastname: this.props.user.lastname,
-    file: ''
+    nickname: this.props.user.nickname || '',
+    website: this.props.user.website || '',
+    phoneNumber: this.props.user.phoneNumber || '',
+    imageUrl: this.props.user.imageUrl,
+    file: this.props.user.file
   }
 
   onChange = event => {
@@ -17,15 +22,64 @@ class EditUserForm extends React.Component {
     })
   }
 
-  onSubmit = async (event, updateUser) => {
-    event.preventDefault()
-    await updateUser({
-      variables: this.state
+  onChangeFile = event => {
+    this.setState({
+      [event.target.name]: event.target.files[0]
     })
+  }
 
-    message
-      .success('User updated!')
-      .then(() => this.props.history.push('/profile'))
+  uploadImage = async (s3, options) => {
+    console.log('Uploading image...')
+    return new Promise((resolve, reject) => {
+      s3.putObject(options, (err, data) => {
+        if (err) return reject(err)
+
+        return resolve(data)
+      })
+    })
+  }
+
+  onSubmit = async (event, updateUser) => {
+    try {
+      event.preventDefault()
+      this.setState({loading: true})
+
+      AWS.config.region = 'us-east-1'
+      AWS.config.update({
+        accessKeyId: 'AKIAIPUHWX7DROFAACPQ',
+        secretAccessKey: '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'
+      })
+
+      const s3 = new AWS.S3({signatureVersion: 'v4'})
+      const options = {
+        Body: this.state.file,
+        Bucket: 'findpet',
+        Key: `${new Date().getTime()}_${this.state._id}`,
+        ContentType: this.state.file.type
+      }
+
+      await this.uploadImage(s3, options)
+
+      this.setState(
+        {
+          file: options.Key,
+          imageUrl: `https://findpet.s3.amazonaws.com/${options.Key}`
+        },
+        async () => {
+          await updateUser({
+            variables: this.state
+          })
+
+          console.log('Success uploaded!..')
+          message
+            .success('User updated!')
+            .then(() => this.props.history.push('/profile'))
+        }
+      )
+    } catch (err) {
+      console.log('Error:', err)
+      return null
+    }
   }
 
   render() {
@@ -35,10 +89,13 @@ class EditUserForm extends React.Component {
         return false
       },
       onRemove: () => {
-        this.setState(prevState => ({...prevState, file: ''}))
+        this.setState(prevState => ({
+          ...prevState,
+          file: ''
+        }))
       }
     }
-    console.log('State:', this.state)
+
     return (
       <Form onSubmit={event => this.onSubmit(event, this.props.updateUser)}>
         <FormItem>
@@ -60,6 +117,33 @@ class EditUserForm extends React.Component {
           />
         </FormItem>
         <FormItem>
+          <Input
+            prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}} />}
+            type="text"
+            value={this.state.nickname}
+            name="nickname"
+            onChange={this.onChange}
+          />
+        </FormItem>
+        <FormItem>
+          <Input
+            prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}} />}
+            type="text"
+            value={this.state.website}
+            name="website"
+            onChange={this.onChange}
+          />
+        </FormItem>
+        <FormItem>
+          <Input
+            prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}} />}
+            type="text"
+            value={this.state.phoneNumber}
+            name="phoneNumber"
+            onChange={this.onChange}
+          />
+        </FormItem>
+        <FormItem>
           <Upload name="avatar" listType="picture" {...props}>
             <Button>
               <Icon type="upload" /> Click to upload
@@ -70,6 +154,7 @@ class EditUserForm extends React.Component {
         <FormItem>
           <Button
             style={{width: '100%'}}
+            loading={this.state.loading}
             type="primary"
             htmlType="submit"
             className="login-form-button"

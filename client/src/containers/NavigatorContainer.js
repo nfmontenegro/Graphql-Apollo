@@ -1,7 +1,7 @@
 import React from 'react'
 import {compose} from 'recompose'
 import {Route, withRouter} from 'react-router-dom'
-import {Menu, Icon, Spin} from 'antd'
+import {Avatar, Menu, Icon, Spin} from 'antd'
 import {withApollo, Query} from 'react-apollo'
 
 import SignInFormContainer from './SignInFormContainer'
@@ -50,7 +50,11 @@ const NavigatorContainer = ({history, client}) => {
                     if (loading) return <Spin size="large" />
                     return (
                       <div>
-                        <Icon type="user" />
+                        <Avatar
+                          src={user.imageUrl}
+                          size="small"
+                          style={{marginRight: '5px'}}
+                        />
                         {user.name}
                       </div>
                     )

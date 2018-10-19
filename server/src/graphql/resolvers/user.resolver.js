@@ -34,7 +34,7 @@ export default {
 
     registerUser: async (
       _,
-      {name, lastname, email, password},
+      {name, lastname, email, password, nickname, website, phoneNumber},
       {models: {User}, request: {userAccess}}
     ) => {
       const user = await User.findOne({
@@ -46,6 +46,9 @@ export default {
           name,
           lastname,
           email,
+          nickname,
+          website,
+          phoneNumber,
           password: await bcrypt.hash(password, 10)
         })
         return user
@@ -92,7 +95,6 @@ export default {
       {models: {User}, request: {userAccess}}
     ) => {
       if (!userAccess) throw new Error(`Don't have permissions`)
-
       await User.findOneAndUpdate(
         {
           _id

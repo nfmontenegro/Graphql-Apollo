@@ -17,6 +17,11 @@ export const USER = gql`
       lastname
       email
       password
+      nickname
+      website
+      phoneNumber
+      file
+      imageUrl
     }
   }
 `
@@ -30,6 +35,9 @@ export const SIGN_IN = gql`
         name
         lastname
         email
+        nickname
+        website
+        phoneNumber
         password
       }
     }
@@ -44,6 +52,11 @@ export const LIST_USERS = gql`
       lastname
       email
       password
+      phoneNumber
+      website
+      nickname
+      file
+      imageUrl
     }
   }
 `
@@ -54,18 +67,27 @@ export const REGISTER_USER = gql`
     $lastname: String!
     $email: String!
     $password: String!
+    $nickname: String
+    $phoneNumber: Int
+    $website: String
   ) {
     registerUser(
       name: $name
       lastname: $lastname
       email: $email
       password: $password
+      nickname: $nickname
+      phoneNumber: $phoneNumber
+      website: $website
     ) {
       _id
       name
       lastname
       email
       password
+      nickname
+      phoneNumber
+      website
     }
   }
 `
@@ -76,11 +98,31 @@ export const UPDATE_USER = gql`
     $name: String
     $lastname: String
     $email: String
+    $nickname: String
+    $phoneNumber: Int
+    $website: String
+    $file: String
+    $imageUrl: String
   ) {
-    updateUser(_id: $_id, name: $name, lastname: $lastname, email: $email) {
+    updateUser(
+      _id: $_id
+      name: $name
+      lastname: $lastname
+      email: $email
+      nickname: $nickname
+      phoneNumber: $phoneNumber
+      website: $website
+      file: $file
+      imageUrl: $imageUrl
+    ) {
       name
       lastname
       email
+      nickname
+      phoneNumber
+      website
+      file
+      imageUrl
     }
   }
 `

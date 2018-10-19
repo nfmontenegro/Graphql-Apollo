@@ -18,10 +18,25 @@ function UserProfile({history, user}) {
             ]}
           >
             <Meta
-              avatar={<Avatar src={''} />}
+              avatar={<Avatar src={user.imageUrl} />}
               title={`${user.name} ${user.lastname}`}
-              description={user.email}
             />
+            <p>
+              <strong>Email: </strong>
+              {user.email}
+            </p>
+            <p>
+              <strong>Nickname: </strong>
+              {user.nickname}
+            </p>
+            <p>
+              <strong>Web Site: </strong>
+              {user.website}
+            </p>
+            <p>
+              <strong>Phone Number: </strong>
+              {user.phoneNumber}
+            </p>
           </Card>
         </Col>
       </Row>

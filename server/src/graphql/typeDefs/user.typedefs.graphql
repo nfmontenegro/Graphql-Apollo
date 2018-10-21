@@ -17,7 +17,7 @@ type Mutation {
     password: String!
   ): User!
 
-  updateUser(   
+  updateUser(
     _id: String!
     name: String
     lastname: String
@@ -29,10 +29,7 @@ type Mutation {
     imageUrl: String
   ): User!
 
-  payloadLoginUser (
-    email: String!
-    password: String!
-  ): AuthPayload
+  payloadLoginUser(email: String!, password: String!): AuthPayload
 }
 
 # Schema Types

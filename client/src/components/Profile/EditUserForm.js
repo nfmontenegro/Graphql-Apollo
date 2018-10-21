@@ -1,6 +1,6 @@
 import React from 'react'
 import {Button, Form, Icon, Input, message, Upload} from 'antd'
-import AWS from 'aws-sdk'
+import {uploadImage} from '../../services/aws'
 
 const FormItem = Form.Item
 
@@ -28,52 +28,34 @@ class EditUserForm extends React.Component {
     })
   }
 
-  uploadImage = async (s3, options) => {
-    console.log('Uploading image...')
-    return new Promise((resolve, reject) => {
-      s3.putObject(options, (err, data) => {
-        if (err) return reject(err)
-
-        return resolve(data)
-      })
-    })
-  }
-
   onSubmit = async (event, updateUser) => {
     try {
       event.preventDefault()
       this.setState({loading: true})
 
-      AWS.config.region = 'us-east-1'
-      AWS.config.update({
-        accessKeyId: 'AKIAIPUHWX7DROFAACPQ',
-        secretAccessKey: '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'
-      })
-
-      const s3 = new AWS.S3({signatureVersion: 'v4'})
       const options = {
         Body: this.state.file,
-        Bucket: 'findpet',
+        Bucket: process.env.REACT_APP_AWS_BUCKET,
         Key: `${new Date().getTime()}_${this.state._id}`,
         ContentType: this.state.file.type
       }
 
-      await this.uploadImage(s3, options)
+      await uploadImage(options)
 
       this.setState(
         {
           file: options.Key,
-          imageUrl: `https://findpet.s3.amazonaws.com/${options.Key}`
+          imageUrl: `https://${process.env.REACT_APP_AWS_BUCKET}.s3.amazonaws.com/${options.Key}`
         },
         async () => {
           await updateUser({
             variables: this.state
           })
 
-          console.log('Success uploaded!..')
           message
             .success('User updated!')
             .then(() => this.props.history.push('/profile'))
+            .catch(err => console.log(err))
         }
       )
     } catch (err) {

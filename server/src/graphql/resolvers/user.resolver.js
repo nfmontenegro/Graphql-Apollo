@@ -86,7 +86,12 @@ export default {
           expiresIn: '1y'
         }
       )
-      return {user, token, status: 200}
+
+      return {
+        user,
+        token,
+        status: 200
+      }
     },
 
     updateUser: async (

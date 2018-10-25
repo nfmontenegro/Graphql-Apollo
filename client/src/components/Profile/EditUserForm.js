@@ -1,6 +1,6 @@
 import React from 'react'
 import {Button, Form, Icon, Input, message, Upload} from 'antd'
-import {uploadImage} from '../../services/aws'
+import {deleteImage, uploadImage} from '../../services/aws'
 
 const FormItem = Form.Item
 
@@ -12,8 +12,9 @@ class EditUserForm extends React.Component {
     nickname: this.props.user.nickname || '',
     website: this.props.user.website || '',
     phoneNumber: this.props.user.phoneNumber || '',
-    imageUrl: this.props.user.imageUrl,
-    file: this.props.user.file
+    imageUrl: this.props.user.imageUrl || '',
+    file: this.props.user.file || '',
+    inputFile: null
   }
 
   onChange = event => {
@@ -22,30 +23,41 @@ class EditUserForm extends React.Component {
     })
   }
 
-  onChangeFile = event => {
-    this.setState({
-      [event.target.name]: event.target.files[0]
-    })
-  }
-
   onSubmit = async (event, updateUser) => {
     try {
       event.preventDefault()
-      this.setState({loading: true})
+      this.setState({
+        loading: true
+      })
 
-      const options = {
-        Body: this.state.file,
+      const paramsDeleteImage = {
         Bucket: process.env.REACT_APP_AWS_BUCKET,
-        Key: `${new Date().getTime()}_${this.state._id}`,
-        ContentType: this.state.file.type
+        Delete: {
+          Objects: [
+            {
+              Key: this.state.file
+            }
+          ]
+        }
       }
 
-      await uploadImage(options)
+      await deleteImage(paramsDeleteImage)
+
+      const paramsUploadImage = {
+        Body: this.state.inputFile,
+        Bucket: process.env.REACT_APP_AWS_BUCKET,
+        Key: `${new Date().getTime()}_${this.state._id}`,
+        ContentType: this.state.inputFile.type
+      }
+
+      await uploadImage(paramsUploadImage)
 
       this.setState(
         {
-          file: options.Key,
-          imageUrl: `https://${process.env.REACT_APP_AWS_BUCKET}.s3.amazonaws.com/${options.Key}`
+          file: paramsUploadImage.Key,
+          imageUrl: `https://${
+            process.env.REACT_APP_AWS_BUCKET
+          }.s3.amazonaws.com/${paramsUploadImage.Key}`
         },
         async () => {
           await updateUser({
@@ -66,14 +78,14 @@ class EditUserForm extends React.Component {
 
   render() {
     const props = {
-      beforeUpload: file => {
-        this.setState({file})
+      beforeUpload: inputFile => {
+        this.setState({inputFile})
         return false
       },
       onRemove: () => {
         this.setState(prevState => ({
           ...prevState,
-          file: ''
+          inputFile: ''
         }))
       }
     }

@@ -10,7 +10,12 @@ function UserProfile({history, user}) {
         <Col span={7} offset={8}>
           <Card
             style={{width: 500}}
-            actions={[<Icon type="edit" onClick={() => history.push(`/profile/user/${user._id}`)} />]}
+            actions={[
+              <Icon
+                type="edit"
+                onClick={() => history.push(`/profile/user/${user._id}`)}
+              />
+            ]}
           >
             <Row type="flex" justify="center">
               <Meta avatar={<Avatar src={user.imageUrl} size={150} />} />

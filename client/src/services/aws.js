@@ -20,4 +20,18 @@ async function uploadImage(options) {
   })
 }
 
-export {uploadImage}
+async function deleteImage(options) {
+  console.log('Find image...')
+  const s3 = new AWS.S3({signatureVersion: 'v4'})
+
+  return new Promise((resolve, reject) => {
+    s3.deleteObjects(options, (err, data) => {
+      if (err) return reject(err)
+
+      console.log('Image deleted...')
+      resolve(data)
+    })
+  })
+}
+
+export {uploadImage, deleteImage}

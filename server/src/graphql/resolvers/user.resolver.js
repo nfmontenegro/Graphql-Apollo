@@ -35,7 +35,7 @@ export default {
     registerUser: async (
       _,
       {name, lastname, email, password, nickname, website, phoneNumber},
-      {models: {User}, request: {userAccess}}
+      {models: {User}}
     ) => {
       const user = await User.findOne({
         email

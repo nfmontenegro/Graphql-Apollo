@@ -30,18 +30,20 @@ class EditUserForm extends React.Component {
         loading: true
       })
 
-      const paramsDeleteImage = {
-        Bucket: process.env.REACT_APP_AWS_BUCKET,
-        Delete: {
-          Objects: [
-            {
-              Key: this.state.file
-            }
-          ]
+      if (this.state.file) {
+        const paramsDeleteImage = {
+          Bucket: process.env.REACT_APP_AWS_BUCKET,
+          Delete: {
+            Objects: [
+              {
+                Key: this.state.file
+              }
+            ]
+          }
         }
-      }
 
-      await deleteImage(paramsDeleteImage)
+        await deleteImage(paramsDeleteImage)
+      }
 
       const paramsUploadImage = {
         Body: this.state.inputFile,

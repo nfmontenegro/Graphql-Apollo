@@ -1,12 +1,22 @@
 type Query {
    listPublications: [Publication!]!
+   listPublication(_id: String!): Publication
 }
 
 type Mutation {
+  deletePublication(_id: String!): String
+
   createPublication(
-    title: String!, 
-    description: String!, 
-    user: String!, 
+    title: String!
+    description: String!
+    user: String!
+  ): Publication!
+
+  updatePublication(
+    _id: String!
+    userId: String!
+    title: String!
+    description: String!
   ): Publication!
 }
 

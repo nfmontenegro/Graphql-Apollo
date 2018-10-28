@@ -37,23 +37,29 @@ export default {
       {name, lastname, email, password, nickname, website, phoneNumber},
       {models: {User}}
     ) => {
-      const user = await User.findOne({
-        email
-      })
-
-      if (!user) {
-        const user = await User.create({
-          name,
-          lastname,
-          email,
-          nickname,
-          website,
-          phoneNumber,
-          password: await bcrypt.hash(password, 10)
+      try {
+        const user = await User.findOne({
+          email
         })
-        return user
-      } else {
-        throw new Error(`User exist with email ${email}`)
+
+        if (!user) {
+          const user = await User.create({
+            name,
+            lastname,
+            email,
+            nickname,
+            website,
+            phoneNumber,
+            password: await bcrypt.hash(password, 10)
+          })
+
+          console.log('User:', user)
+          return user
+        } else {
+          throw new Error(`User exist with email ${email}`)
+        }
+      } catch (err) {
+        console.log(err)
       }
     },
 

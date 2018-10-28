@@ -45,7 +45,7 @@ type User {
   lastname: String!
   email: String!
   nickname: String
-  phoneNumber: String
+  phoneNumber: Int
   website: String
   file: String
   imageUrl: String

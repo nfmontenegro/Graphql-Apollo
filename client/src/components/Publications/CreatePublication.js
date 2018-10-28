@@ -11,10 +11,9 @@ function CreatePublication({renderFields, fields, user}) {
   const onSubmit = async (event, submit) => {
     event.preventDefault()
     try {
-      const response = await submit({
+      await submit({
         variables: {...fields, user: user._id}
       })
-      if (response) message.success('Publication Created')
     } catch (err) {
       return message.error(`Error ${err}`)
     }
@@ -28,7 +27,8 @@ function CreatePublication({renderFields, fields, user}) {
           {
             query: LIST_PUBLICATIONS
           }
-      ]}>
+        ]}
+      >
         {registerUser => (
           <Row style={{marginTop: '70px'}}>
             <Col span={7} offset={8}>
@@ -47,9 +47,19 @@ function CreatePublication({renderFields, fields, user}) {
 
 const fields = {
   fieldTypes: [
-    {type: 'edit', name: 'title', placeholder: 'Title'},
-    {type: 'edit', name: 'description', placeholder: 'Description'},
-    {type: 'edit', name: 'content', placeholder: 'Content'}
+    {inputType: 'text', type: 'edit', name: 'title', placeholder: 'Title'},
+    {
+      inputType: 'text',
+      type: 'edit',
+      name: 'description',
+      placeholder: 'Description'
+    },
+    {
+      inputType: 'textarea',
+      type: 'edit',
+      name: 'content',
+      placeholder: 'Content'
+    }
   ],
   buttonText: 'Create'
 }

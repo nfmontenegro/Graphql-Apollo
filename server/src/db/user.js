@@ -1,5 +1,10 @@
 import mongoose from 'mongoose'
 
+const ObjectId = mongoose.Types.ObjectId
+ObjectId.prototype.valueOf = function() {
+  return this.toString()
+}
+
 const UserSchema = new mongoose.Schema({
   name: {
     type: String,

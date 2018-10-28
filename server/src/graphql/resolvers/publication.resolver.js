@@ -1,3 +1,5 @@
+import dayjs from 'dayjs'
+
 export default {
   Query: {
     listPublications: async (_, params, {models: {Publication}}) =>
@@ -13,11 +15,15 @@ export default {
     ) => {
       if (!userAccess) throw new Error(`Don't have permissions`)
 
+      // dayjs.locale('en')
       const {_id} = await Publication.create({
         title,
         description,
         user,
-        content
+        content,
+        formatDate: dayjs()
+          .format('YYYY-MM-DD HH:mm:ss')
+          .toString()
       })
 
       return await Publication.findOne({_id}).populate('user')

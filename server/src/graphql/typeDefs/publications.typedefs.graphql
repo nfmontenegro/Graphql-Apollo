@@ -30,6 +30,7 @@ type Publication {
   content: String
   user: UserInfo!
   createdOn: String
+  formatDate: String
 }
 
 type UserInfo {

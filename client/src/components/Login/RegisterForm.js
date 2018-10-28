@@ -46,13 +46,33 @@ function RegisterForm({renderFields, fields, history}) {
 
 const fields = {
   fieldTypes: [
-    {type: 'user', name: 'name', placeholder: 'Name'},
-    {type: 'user', name: 'lastname', placeholder: 'Last Name'},
-    {type: 'user', name: 'nickname', placeholder: 'Nick Name'},
-    {type: 'user', name: 'website', placeholder: 'Web Site'},
-    {type: 'user', name: 'phoneNumber', placeholder: 'Phone Number'},
-    {type: 'inbox', name: 'email', placeholder: 'Email'},
-    {type: 'lock', name: 'password', placeholder: 'Password'}
+    {inputType: 'text', type: 'user', name: 'name', placeholder: 'Name'},
+    {
+      inputType: 'text',
+      type: 'user',
+      name: 'lastname',
+      placeholder: 'Last Name'
+    },
+    {
+      inputType: 'text',
+      type: 'user',
+      name: 'nickname',
+      placeholder: 'Nick Name'
+    },
+    {inputType: 'text', type: 'user', name: 'website', placeholder: 'Web Site'},
+    {
+      inputType: 'text',
+      type: 'user',
+      name: 'phoneNumber',
+      placeholder: 'Phone Number'
+    },
+    {inputType: 'text', type: 'inbox', name: 'email', placeholder: 'Email'},
+    {
+      inputType: 'password',
+      type: 'lock',
+      name: 'password',
+      placeholder: 'Password'
+    }
   ],
   buttonText: 'Register'
 }

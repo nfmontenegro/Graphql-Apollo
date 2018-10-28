@@ -2,6 +2,7 @@ import React from 'react'
 import {Form, Icon, Input, Button} from 'antd'
 
 const FormItem = Form.Item
+const {TextArea} = Input
 
 const withForm = ({fieldTypes, buttonText}) => WrappedComponent => {
   return class Form extends React.Component {
@@ -16,15 +17,24 @@ const withForm = ({fieldTypes, buttonText}) => WrappedComponent => {
 
     renderFields = () => (
       <div>
-        {fieldTypes.map(({type, name, placeholder}, index) => (
+        {fieldTypes.map(({inputType, type, name, placeholder}, index) => (
           <FormItem key={index}>
-            <Input
-              prefix={<Icon type={type} style={{color: 'rgba(0,0,0,.25)'}} />}
-              type={name}
-              name={name}
-              placeholder={placeholder}
-              onChange={this.onChange}
-            />
+            {inputType === 'textarea' ? (
+              <TextArea
+                type={inputType}
+                name={name}
+                placeholder={placeholder}
+                onChange={this.onChange}
+              />
+            ) : (
+              <Input
+                prefix={<Icon type={type} style={{color: 'rgba(0,0,0,.25)'}} />}
+                type={inputType}
+                name={name}
+                placeholder={placeholder}
+                onChange={this.onChange}
+              />
+            )}
           </FormItem>
         ))}
         <FormItem>

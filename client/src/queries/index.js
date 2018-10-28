@@ -31,7 +31,6 @@ export const SIGN_IN = gql`
     payloadLoginUser(email: $email, password: $password) {
       token
       user {
-        _id
         name
         lastname
         email
@@ -47,7 +46,6 @@ export const SIGN_IN = gql`
 export const LIST_USERS = gql`
   query LIST_USERS {
     listUsers {
-      _id
       name
       lastname
       email
@@ -80,7 +78,6 @@ export const REGISTER_USER = gql`
       phoneNumber: $phoneNumber
       website: $website
     ) {
-      _id
       name
       lastname
       email
@@ -133,7 +130,12 @@ export const CREATE_PUBLICATION = gql`
     $content: String!
     $user: String!
   ) {
-    createPublication(title: $title, description: $description, content: $content, user: $user) {
+    createPublication(
+      title: $title
+      description: $description
+      content: $content
+      user: $user
+    ) {
       _id
       title
       description
@@ -154,6 +156,7 @@ export const LIST_PUBLICATIONS = gql`
       title
       description
       content
+      formatDate
       user {
         _id
         phoneNumber

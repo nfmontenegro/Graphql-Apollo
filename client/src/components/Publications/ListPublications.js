@@ -13,11 +13,10 @@ function ListPublication() {
         if (loading) return <Spin />
         if (error) return error
         return (
-          <Content style={{padding: '50px 250px 50px 250px'}}>
+          <Content style={{padding: '50px 350px 50px 350px'}}>
             <List
               itemLayout="vertical"
               size="large"
-              bordered
               dataSource={data.listPublications}
               renderItem={publication => {
                 return (
@@ -25,18 +24,25 @@ function ListPublication() {
                     key={publication._id}
                     extra={
                       <img
-                        width={400}
+                        width={250}
                         height={200}
                         alt="logo"
                         src={publication.user.imageUrl}
                       />
                     }
                   >
-                    <List.Item.Meta
-                      avatar={<Avatar src={publication.user.imageUrl} />}
-                      title={publication.title}
-                      description={publication.description}
-                    />
+                    <p>
+                      Posted By:{' '}
+                      <Avatar
+                        size={30}
+                        shape="circle"
+                        style={{marginRight: '5px'}}
+                        src={publication.user.imageUrl}
+                      />
+                      {publication.user.nickname} {publication.formatDate}
+                    </p>
+                    <List.Item.Meta title={publication.title} />
+                    {publication.description}
                     {publication.content}
                   </List.Item>
                 )

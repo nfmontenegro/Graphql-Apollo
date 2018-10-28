@@ -52,8 +52,13 @@ function SignInForm({renderFields, fields, history}) {
 
 const fields = {
   fieldTypes: [
-    {type: 'inbox', name: 'email', placeholder: 'Email'},
-    {type: 'lock', name: 'password', placeholder: 'Password'}
+    {inputType: 'text', type: 'inbox', name: 'email', placeholder: 'Email'},
+    {
+      inputType: 'password',
+      type: 'lock',
+      name: 'password',
+      placeholder: 'Password'
+    }
   ],
   buttonText: 'Sign In'
 }

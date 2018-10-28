@@ -1,6 +1,10 @@
 import mongoose from 'mongoose'
 
 const Schema = mongoose.Schema
+const ObjectId = mongoose.Types.ObjectId
+ObjectId.prototype.valueOf = function() {
+  return this.toString()
+}
 
 const PublicationSchema = new mongoose.Schema({
   title: {
@@ -16,6 +20,9 @@ const PublicationSchema = new mongoose.Schema({
     type: Schema.Types.ObjectId,
     ref: 'User',
     required: true
+  },
+  formatDate: {
+    type: String
   },
   createdOn: {
     type: Date,

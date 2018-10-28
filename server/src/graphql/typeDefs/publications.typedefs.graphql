@@ -9,24 +9,27 @@ type Mutation {
   createPublication(
     title: String!
     description: String!
+    content: String!
     user: String!
   ): Publication!
 
   updatePublication(
     _id: String!
     userId: String!
-    title: String!
-    description: String!
+    title: String
+    description: String
+    content: String
   ): Publication!
 }
 
 #Schema Types
 type Publication {
   _id: String!
-  title: String!
-  description: String!
+  title: String
+  description: String
+  content: String
   user: UserInfo!
-  createdOn: String!
+  createdOn: String
 }
 
 type UserInfo {

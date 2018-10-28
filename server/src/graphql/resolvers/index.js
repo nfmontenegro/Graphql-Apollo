@@ -6,7 +6,7 @@ import publicationResolver from './publication.resolver'
 // import userResolvers from "./user.resolvers";
 // import welcomeResolvers from "./welcome.resolvers";
 // const resolversArray = [userResolvers, welcomeResolvers];
-/*  AUTOMATED APPROACH: Put your resolvers anywhere 
+/*  AUTOMATED APPROACH: Put your resolvers anywhere
     with ".resolvers.[js/ts]" naming convention */
 const resolversArray = [userResolvers, publicationResolver]
 

@@ -2,7 +2,7 @@ import React from 'react'
 import {Mutation} from 'react-apollo'
 import {Row, Col, Card} from 'antd'
 
-import {USER, UPDATE_USER} from '../../queries'
+import {USER, UPDATE_USER, LIST_PUBLICATIONS} from '../../queries'
 import EditUserForm from './EditUserForm'
 
 function EditUser(props) {
@@ -18,6 +18,9 @@ function EditUser(props) {
                 {
                   query: USER,
                   variables: {token}
+                },
+                {
+                  query: LIST_PUBLICATIONS
                 }
               ]}
             >

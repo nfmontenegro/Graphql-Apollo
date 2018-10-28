@@ -4,16 +4,18 @@ const Schema = mongoose.Schema
 
 const PublicationSchema = new mongoose.Schema({
   title: {
-    type: String,
-    required: true
+    type: String
   },
   description: {
-    type: String,
-    required: true
+    type: String
+  },
+  content: {
+    type: String
   },
   user: {
     type: Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'User',
+    required: true
   },
   createdOn: {
     type: Date,

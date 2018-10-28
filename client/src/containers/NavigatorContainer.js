@@ -7,7 +7,7 @@ import {withApollo, Query} from 'react-apollo'
 import SignInFormContainer from './SignInFormContainer'
 import ProfileContainer from './ProfileContainer'
 import {HomeContainer} from './HomeContainer'
-import {UserContainer} from './UserContainer'
+import {PublicationContainer} from './PublicationContainer'
 import RegisterFormContainer from './RegisterFormContainer'
 
 import withAuth from '../HOC/withAuth'
@@ -35,9 +35,9 @@ const NavigatorContainer = ({history, client}) => {
         )}
 
         {token && (
-          <Menu.Item key="usergroup-add" onClick={() => history.push('/users')}>
-            <Icon type="usergroup-add" />
-            Users
+          <Menu.Item key="edit" onClick={() => history.push('/publications')}>
+            <Icon type="edit" />
+            Publications
           </Menu.Item>
         )}
 
@@ -95,7 +95,7 @@ const NavigatorContainer = ({history, client}) => {
       <Route exact path="/" component={HomeContainer} />
       <Route path="/signin" component={SignInFormContainer} />
       <Route path="/register" component={RegisterFormContainer} />
-      <Route path="/users" component={withAuth(UserContainer)} />
+      <Route path="/publications" component={withAuth(PublicationContainer)} />
       <Route path="/profile" component={withAuth(ProfileContainer)} />
     </div>
   )

@@ -8,7 +8,7 @@ export default {
   Mutation: {
     createPublication: async (
       _,
-      {title, description, user},
+      {title, description, user, content},
       {models: {Publication}, request: {userAccess}}
     ) => {
       if (!userAccess) throw new Error(`Don't have permissions`)
@@ -16,7 +16,8 @@ export default {
       const {_id} = await Publication.create({
         title,
         description,
-        user
+        user,
+        content
       })
 
       return await Publication.findOne({_id}).populate('user')

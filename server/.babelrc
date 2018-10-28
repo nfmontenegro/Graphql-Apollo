@@ -3,6 +3,17 @@
     "env"
   ],
   "plugins": [
-    "transform-object-rest-spread"
-  ]
+    "transform-object-rest-spread",
+    [
+      "module-resolver",
+      {
+        "root": [
+          "./"
+        ],
+        "alias": {
+          "App": "./src"
+        }
+      }
+    ]
+  ],
 }

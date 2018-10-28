@@ -10,7 +10,7 @@ export default function withAuth(WrappedComponent) {
     render() {
       return (
         <Query query={TOKEN}>
-          {({loading, error, data}) => {
+          {({loading, error}) => {
             if (loading) return <Spin size="large" />
             if (error) return <Redirect to="/signin" />
             return (

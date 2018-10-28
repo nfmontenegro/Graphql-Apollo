@@ -126,3 +126,42 @@ export const UPDATE_USER = gql`
     }
   }
 `
+export const CREATE_PUBLICATION = gql`
+  mutation CREATE_PUBLICATION(
+    $title: String!
+    $description: String!
+    $content: String!
+    $user: String!
+  ) {
+    createPublication(title: $title, description: $description, content: $content, user: $user) {
+      _id
+      title
+      description
+      content
+      user {
+        name
+        lastname
+        _id
+        phoneNumber
+      }
+    }
+  }
+`
+export const LIST_PUBLICATIONS = gql`
+  query LIST_PUBLICATIONS {
+    listPublications {
+      _id
+      title
+      description
+      content
+      user {
+        _id
+        phoneNumber
+        name
+        lastname
+        imageUrl
+        nickname
+      }
+    }
+  }
+`

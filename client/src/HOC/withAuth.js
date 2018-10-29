@@ -1,5 +1,5 @@
 import React from 'react'
-import {Spin} from 'antd'
+import {Spin, Row, Col} from 'antd'
 import {Query} from 'react-apollo'
 import {Redirect} from 'react-router-dom'
 
@@ -11,7 +11,14 @@ export default function withAuth(WrappedComponent) {
       return (
         <Query query={TOKEN}>
           {({loading, error}) => {
-            if (loading) return <Spin size="large" />
+            if (loading)
+              return (
+                <Row style={{marginTop: '70px'}}>
+                  <Col span={7} offset={11}>
+                    <Spin size="large" />
+                  </Col>
+                </Row>
+              )
             if (error) return <Redirect to="/signin" />
             return (
               <React.Fragment>

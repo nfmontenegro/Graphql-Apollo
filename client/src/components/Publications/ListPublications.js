@@ -1,5 +1,5 @@
 import React from 'react'
-import {List, Avatar, Spin, Layout} from 'antd'
+import {Avatar, Layout, List, Spin} from 'antd'
 import {Query} from 'react-apollo'
 
 import {LIST_PUBLICATIONS} from '../../queries'
@@ -32,7 +32,7 @@ function ListPublication() {
                     }
                   >
                     <p>
-                      Posted By:{' '}
+                      By:{' '}
                       <Avatar
                         size={30}
                         shape="circle"

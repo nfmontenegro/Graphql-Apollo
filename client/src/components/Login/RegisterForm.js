@@ -10,6 +10,7 @@ function RegisterForm({renderFields, fields, history}) {
   const onSubmit = async (event, submit) => {
     event.preventDefault()
     try {
+      fields.loading = true
       const {
         data: {
           registerUser: {name}

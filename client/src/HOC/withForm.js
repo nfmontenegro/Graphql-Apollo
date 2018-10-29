@@ -1,18 +1,24 @@
 import React from 'react'
-import {Form, Icon, Input, Button} from 'antd'
+import {Form, Icon, Input, Button, Spin} from 'antd'
 
 const FormItem = Form.Item
 const {TextArea} = Input
 
 const withForm = ({fieldTypes, buttonText}) => WrappedComponent => {
   return class Form extends React.Component {
-    state = {}
+    state = {
+      loading: false
+    }
 
     onChange = event => {
       const {name, value} = event.target
       this.setState({
         [name]: value
       })
+    }
+
+    cleandFields = () => {
+      document.getElementById('create-form').reset()
     }
 
     renderFields = () => (
@@ -44,7 +50,7 @@ const withForm = ({fieldTypes, buttonText}) => WrappedComponent => {
             htmlType="submit"
             className="login-form-button"
           >
-            {buttonText}
+            {this.state.loading ? <Spin /> : buttonText}
           </Button>
         </FormItem>
       </div>
@@ -56,6 +62,7 @@ const withForm = ({fieldTypes, buttonText}) => WrappedComponent => {
           {...this.props}
           renderFields={this.renderFields}
           fields={this.state}
+          cleanFields={this.cleandFields}
         />
       )
     }

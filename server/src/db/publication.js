@@ -24,6 +24,9 @@ const PublicationSchema = new mongoose.Schema({
   formatDate: {
     type: String
   },
+  imageUrl: {
+    type: String
+  },
   createdOn: {
     type: Date,
     default: Date.now

@@ -17,7 +17,7 @@ const NavigatorContainer = ({history, client}) => {
   const logout = () => {
     client.resetStore()
     localStorage.removeItem('token')
-    history.push('/signin')
+    history.push('/')
   }
 
   const SubMenu = Menu.SubMenu
@@ -75,6 +75,13 @@ const NavigatorContainer = ({history, client}) => {
               </Menu.Item>
             </MenuItemGroup>
           </SubMenu>
+        )}
+
+        {!token && (
+          <Menu.Item key="home" onClick={() => history.push('/')}>
+            <Icon type="home" />
+            Home
+          </Menu.Item>
         )}
 
         {!token && (

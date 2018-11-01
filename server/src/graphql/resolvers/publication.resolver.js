@@ -10,7 +10,7 @@ export default {
   Mutation: {
     createPublication: async (
       _,
-      {title, description, user, content},
+      {title, description, user, content, imageUrl},
       {models: {Publication}, request: {userAccess}}
     ) => {
       if (!userAccess) throw new Error(`Don't have permissions`)
@@ -21,6 +21,7 @@ export default {
         description,
         user,
         content,
+        imageUrl,
         formatDate: dayjs()
           .format('YYYY-MM-DD HH:mm:ss')
           .toString()

@@ -1,5 +1,5 @@
 import React from 'react'
-import {Form, Icon, Input, Button, Spin} from 'antd'
+import {Form, Icon, Input, Button, Spin, Upload} from 'antd'
 
 const FormItem = Form.Item
 const {TextArea} = Input
@@ -17,44 +17,80 @@ const withForm = ({fieldTypes, buttonText}) => WrappedComponent => {
       })
     }
 
+    loadingForm = () => {
+      this.setState({
+        loading: !this.state.loading
+      })
+    }
+
     cleandFields = () => {
       document.getElementById('create-form').reset()
     }
 
-    renderFields = () => (
-      <div>
-        {fieldTypes.map(({inputType, type, name, placeholder}, index) => (
-          <FormItem key={index}>
-            {inputType === 'textarea' ? (
-              <TextArea
-                type={inputType}
-                name={name}
-                placeholder={placeholder}
-                onChange={this.onChange}
-              />
-            ) : (
-              <Input
-                prefix={<Icon type={type} style={{color: 'rgba(0,0,0,.25)'}} />}
-                type={inputType}
-                name={name}
-                placeholder={placeholder}
-                onChange={this.onChange}
-              />
-            )}
+    removeFile = () => {
+      this.setState(prevState => ({
+        ...prevState,
+        inputFile: ''
+      }))
+    }
+
+    renderFields = () => {
+      const props = {
+        beforeUpload: inputFile => {
+          this.setState({inputFile})
+          return false
+        },
+        onRemove: () => {
+          this.setState(prevState => ({
+            ...prevState,
+            inputFile: ''
+          }))
+        }
+      }
+
+      return (
+        <div>
+          {fieldTypes.map(({inputType, type, name, placeholder}, index) => (
+            <FormItem key={index}>
+              {inputType === 'textarea' ? (
+                <TextArea
+                  type={inputType}
+                  name={name}
+                  placeholder={placeholder}
+                  onChange={this.onChange}
+                />
+              ) : inputType === 'text' || inputType === 'password' ? (
+                <Input
+                  prefix={
+                    <Icon type={type} style={{color: 'rgba(0,0,0,.25)'}} />
+                  }
+                  type={inputType}
+                  name={name}
+                  placeholder={placeholder}
+                  onChange={this.onChange}
+                />
+              ) : (
+                <Upload name={name} listType="picture" {...props}>
+                  <Button>
+                    <Icon type={inputType} /> Click to upload
+                  </Button>
+                </Upload>
+              )}
+            </FormItem>
+          ))}
+          <FormItem>
+            <Button
+              style={{width: '100%'}}
+              type="primary"
+              htmlType="submit"
+              className="login-form-button"
+            >
+              {this.state.loading ? <Spin /> : buttonText}
+            </Button>
           </FormItem>
-        ))}
-        <FormItem>
-          <Button
-            style={{width: '100%'}}
-            type="primary"
-            htmlType="submit"
-            className="login-form-button"
-          >
-            {this.state.loading ? <Spin /> : buttonText}
-          </Button>
-        </FormItem>
-      </div>
-    )
+        </div>
+      )
+    }
 
     render() {
       return (
@@ -63,6 +99,8 @@ const withForm = ({fieldTypes, buttonText}) => WrappedComponent => {
           renderFields={this.renderFields}
           fields={this.state}
           cleanFields={this.cleandFields}
+          loadingForm={this.loadingForm}
+          removeFile={this.removeFile}
         />
       )
     }

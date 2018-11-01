@@ -3,23 +3,51 @@ import {compose} from 'recompose'
 import {Form, Row, Col, Card, message} from 'antd'
 import {Mutation} from 'react-apollo'
 
+import {uploadImage} from '../../services/aws'
 import {CREATE_PUBLICATION, LIST_PUBLICATIONS} from '../../queries'
 import withForm from '../../HOC/withForm'
 import withUser from '../../HOC/withUser'
 
-function CreatePublication({renderFields, fields, user, cleanFields}) {
+function CreatePublication({
+  renderFields,
+  fields,
+  user,
+  cleanFields,
+  loadingForm,
+  removeFile
+}) {
   const onSubmit = async (event, submit) => {
     event.preventDefault()
     try {
-      fields.loading = true
+      loadingForm()
+
+      const paramsUploadImage = {
+        Body: fields.inputFile,
+        Bucket: process.env.REACT_APP_AWS_BUCKET,
+        Key: `${new Date().getTime()}_${user._id}`,
+        ContentType: fields.inputFile.type
+      }
+
+      await uploadImage(paramsUploadImage)
+
       await submit({
-        variables: {...fields, user: user._id}
+        variables: {
+          ...fields,
+          imageUrl: `https://${
+            process.env.REACT_APP_AWS_BUCKET
+          }.s3.amazonaws.com/${paramsUploadImage.Key}`,
+          user: user._id
+        }
       })
 
-      return message.success(`Successful registered publication`).then(() => {
-        cleanFields()
-        fields.loading = false
-      })
+      return message
+        .success(`Successful registered publication`)
+        .then(() => {
+          cleanFields()
+          loadingForm()
+          removeFile()
+        })
+        .catch(err => console.log('Err:', err))
     } catch (err) {
       return message.error(`Error ${err}`)
     }
@@ -68,6 +96,11 @@ const fields = {
       type: 'edit',
       name: 'content',
       placeholder: 'Content'
+    },
+    {
+      inputType: 'file',
+      type: 'edit',
+      name: 'image'
     }
   ],
   buttonText: 'Create'

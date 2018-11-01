@@ -8,6 +8,7 @@ export default function withUser(WrappedComponent) {
   return class extends React.Component {
     render() {
       const token = localStorage.getItem('token')
+      if (!token) return <WrappedComponent />
       return (
         <Query query={USER} variables={{token}}>
           {({loading, data}) => {

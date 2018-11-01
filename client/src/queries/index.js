@@ -129,17 +129,20 @@ export const CREATE_PUBLICATION = gql`
     $description: String!
     $content: String!
     $user: String!
+    $imageUrl: String!
   ) {
     createPublication(
       title: $title
       description: $description
       content: $content
       user: $user
+      imageUrl: $imageUrl
     ) {
       _id
       title
       description
       content
+      imageUrl
       user {
         name
         lastname
@@ -157,6 +160,7 @@ export const LIST_PUBLICATIONS = gql`
       description
       content
       formatDate
+      imageUrl
       user {
         _id
         phoneNumber

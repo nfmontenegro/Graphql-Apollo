@@ -15,7 +15,6 @@ export default {
     ) => {
       if (!userAccess) throw new Error(`Don't have permissions`)
 
-      // dayjs.locale('en')
       const {_id} = await Publication.create({
         title,
         description,

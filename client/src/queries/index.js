@@ -129,7 +129,7 @@ export const CREATE_PUBLICATION = gql`
     $description: String!
     $content: String!
     $user: String!
-    $imageUrl: String!
+    $imageUrl: String
   ) {
     createPublication(
       title: $title

@@ -21,21 +21,27 @@ function CreatePublication({
     try {
       loadingForm()
 
-      const paramsUploadImage = {
-        Body: fields.inputFile,
-        Bucket: process.env.REACT_APP_AWS_BUCKET,
-        Key: `${new Date().getTime()}_${user._id}`,
-        ContentType: fields.inputFile.type
+      let paramsUploadImage
+      let imageUrl
+      if (fields.inputFile) {
+        paramsUploadImage = {
+          Body: fields.inputFile,
+          Bucket: process.env.REACT_APP_AWS_BUCKET,
+          Key: `${new Date().getTime()}_${user._id}`,
+          ContentType: fields.inputFile.type
+        }
+
+        imageUrl = `https://${
+          process.env.REACT_APP_AWS_BUCKET
+        }.s3.amazonaws.com/${paramsUploadImage.Key} `
+        await uploadImage(paramsUploadImage)
       }
 
-      await uploadImage(paramsUploadImage)
-
+      console.log('Image: ', imageUrl)
       await submit({
         variables: {
           ...fields,
-          imageUrl: `https://${
-            process.env.REACT_APP_AWS_BUCKET
-          }.s3.amazonaws.com/${paramsUploadImage.Key}`,
+          imageUrl: imageUrl ? imageUrl : '',
           user: user._id
         }
       })

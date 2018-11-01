@@ -10,7 +10,7 @@ type Mutation {
     title: String!
     description: String!
     content: String!
-    imageUrl: String!
+    imageUrl: String
     user: String!
   ): Publication!
 

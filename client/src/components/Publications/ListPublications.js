@@ -29,7 +29,11 @@ function ListPublication({user}) {
                           width={250}
                           height={200}
                           alt="logo"
-                          src={publication.imageUrl}
+                          src={
+                            !publication.imageUrl
+                              ? 'https://image.shutterstock.com/image-illustration/404-funny-cats-design-260nw-757415008.jpg'
+                              : publication.imageUrl
+                          }
                         />
                       }
                     >

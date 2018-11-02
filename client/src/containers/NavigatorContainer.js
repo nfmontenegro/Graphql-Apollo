@@ -1,6 +1,6 @@
 import React, {Suspense, lazy} from 'react'
 import {compose} from 'recompose'
-import {Route, withRouter} from 'react-router-dom'
+import {Route, Switch, withRouter} from 'react-router-dom'
 import {Avatar, Menu, Icon, Spin, Row, Col} from 'antd'
 import {withApollo, Query} from 'react-apollo'
 
@@ -114,21 +114,25 @@ const NavigatorContainer = ({history, client}) => {
           </Menu.Item>
         )}
       </Menu>
-
-      <Route exact path="/" component={WaitingComponent(HomeContainer)} />
-      <Route path="/signin" component={WaitingComponent(SignInFormContainer)} />
-      <Route
-        path="/register"
-        component={WaitingComponent(RegisterFormContainer)}
-      />
-      <Route
-        path="/publications"
-        component={WaitingComponent(withAuth(PublicationContainer))}
-      />
-      <Route
-        path="/profile"
-        component={WaitingComponent(withAuth(ProfileContainer))}
-      />
+      <Switch>
+        <Route exact path="/" component={WaitingComponent(HomeContainer)} />
+        <Route
+          path="/signin"
+          component={WaitingComponent(SignInFormContainer)}
+        />
+        <Route
+          path="/register"
+          component={WaitingComponent(RegisterFormContainer)}
+        />
+        <Route
+          path="/publications"
+          component={WaitingComponent(withAuth(PublicationContainer))}
+        />
+        <Route
+          path="/profile"
+          component={WaitingComponent(withAuth(ProfileContainer))}
+        />
+      </Switch>
     </div>
   )
 }

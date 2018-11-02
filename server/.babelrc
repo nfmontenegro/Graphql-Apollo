@@ -11,7 +11,8 @@
           "./"
         ],
         "alias": {
-          "@App": "./src"
+          "@Graphql": "./src/graphql",
+          "@DB": "./src/db"
         }
       }
     ]

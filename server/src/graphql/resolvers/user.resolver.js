@@ -42,7 +42,6 @@ export default {
           email
         })
 
-        console.log('USer:', user)
         if (!user) {
           const user = await User.create({
             name,

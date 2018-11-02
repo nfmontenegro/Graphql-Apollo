@@ -1,6 +1,6 @@
 import {mergeResolvers} from 'merge-graphql-schemas'
-import userResolvers from '@App/graphql/resolvers/user.resolver'
-import publicationResolvers from '@App/graphql/resolvers/publication.resolver'
+import userResolvers from '@Graphql/resolvers/user.resolver'
+import publicationResolvers from '@Graphql/resolvers/publication.resolver'
 
 /* MANUAL APPROACH: Update this file manually with each resolver file */
 // import userResolvers from "./user.resolvers";

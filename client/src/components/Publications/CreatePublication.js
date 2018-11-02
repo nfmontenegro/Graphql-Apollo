@@ -1,118 +1,51 @@
 import React from 'react'
-import {compose} from 'recompose'
-import {Form, Row, Col, Card, message} from 'antd'
+import {compose} from 'react-apollo'
 import {Mutation} from 'react-apollo'
 
-import {uploadImage} from '../../services/aws'
 import {CREATE_PUBLICATION, LIST_PUBLICATIONS} from '../../queries'
-import withForm from '../../HOC/withForm'
+import CreateFrom from '../Form/CreateForm'
 import withUser from '../../HOC/withUser'
 
-function CreatePublication({
-  renderFields,
-  fields,
-  user,
-  cleanFields,
-  loadingForm,
-  removeFile
-}) {
-  const onSubmit = async (event, submit) => {
-    event.preventDefault()
-    try {
-      loadingForm()
-
-      let paramsUploadImage
-      let imageUrl
-      if (fields.inputFile) {
-        paramsUploadImage = {
-          Body: fields.inputFile,
-          Bucket: process.env.REACT_APP_AWS_BUCKET,
-          Key: `${new Date().getTime()}_${user._id}`,
-          ContentType: fields.inputFile.type
-        }
-
-        imageUrl = `https://${
-          process.env.REACT_APP_AWS_BUCKET
-        }.s3.amazonaws.com/${paramsUploadImage.Key} `
-        await uploadImage(paramsUploadImage)
-      }
-
-      console.log('Image: ', imageUrl)
-      await submit({
-        variables: {
-          ...fields,
-          imageUrl: imageUrl ? imageUrl : '',
-          user: user._id
-        }
-      })
-
-      return message
-        .success(`Successful registered publication`)
-        .then(() => {
-          cleanFields()
-          loadingForm()
-          removeFile()
-        })
-        .catch(err => console.log('Err:', err))
-    } catch (err) {
-      return message.error(`Error ${err}`)
-    }
-  }
-
-  return (
-    <React.Fragment>
-      <Mutation
-        mutation={CREATE_PUBLICATION}
-        refetchQueries={() => [
-          {
-            query: LIST_PUBLICATIONS
-          }
-        ]}
-      >
-        {registerUser => (
-          <Row style={{marginTop: '70px'}}>
-            <Col span={7} offset={8}>
-              <Card>
-                <Form
-                  onSubmit={event => onSubmit(event, registerUser)}
-                  id="create-form"
-                >
-                  {renderFields()}
-                </Form>
-              </Card>
-            </Col>
-          </Row>
-        )}
-      </Mutation>
-    </React.Fragment>
-  )
-}
-
-const fields = {
-  fieldTypes: [
-    {inputType: 'text', type: 'edit', name: 'title', placeholder: 'Title'},
+function CreatePublication(props) {
+  const fields = [
+    {inputType: 'text', type: 'edit', name: 'title'},
     {
       inputType: 'text',
       type: 'edit',
-      name: 'description',
-      placeholder: 'Description'
+      name: 'description'
     },
     {
       inputType: 'textarea',
       type: 'edit',
-      name: 'content',
-      placeholder: 'Content'
+      name: 'content'
     },
     {
       inputType: 'file',
       type: 'edit',
       name: 'image'
     }
-  ],
-  buttonText: 'Create'
+  ]
+  const buttonText = 'Create'
+
+  return (
+    <Mutation
+      mutation={CREATE_PUBLICATION}
+      refetchQueries={() => [
+        {
+          query: LIST_PUBLICATIONS
+        }
+      ]}
+    >
+      {createPublication => (
+        <CreateFrom
+          fields={fields}
+          buttonText={buttonText}
+          {...props}
+          mutation={createPublication}
+        />
+      )}
+    </Mutation>
+  )
 }
 
-export default compose(
-  withUser,
-  withForm(fields)
-)(CreatePublication)
+export default compose(withUser)(CreatePublication)

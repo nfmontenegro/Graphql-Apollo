@@ -1,8 +1,9 @@
 import {GraphQLServer} from 'graphql-yoga'
-import {initDB, models} from './db'
 import jwt from 'jsonwebtoken'
-import {default as typeDefs} from './graphql/typeDefs'
-import {default as resolvers} from './graphql/resolvers'
+
+import {initDB, models} from '@App/db'
+import {default as typeDefs} from '@App/graphql/typeDefs'
+import {default as resolvers} from '@App/graphql/resolvers'
 
 require('dotenv').config()
 

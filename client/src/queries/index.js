@@ -172,3 +172,9 @@ export const LIST_PUBLICATIONS = gql`
     }
   }
 `
+
+export const REMOVE_PUBLICATION = gql`
+  mutation REMOVE_PUBLICATION($_id: String!) {
+    deletePublication(_id: $_id)
+  }
+`

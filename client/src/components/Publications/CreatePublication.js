@@ -38,10 +38,11 @@ function CreatePublication(props) {
     >
       {createPublication => (
         <CreateFrom
+          {...props}
           fields={fields}
           buttonText={buttonText}
-          {...props}
           mutation={createPublication}
+          message="Success Register Publication!"
         />
       )}
     </Mutation>

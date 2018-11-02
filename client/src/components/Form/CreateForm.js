@@ -52,7 +52,7 @@ class CreateForm extends React.Component {
         await uploadImage(paramsUploadImage)
       }
 
-      const response = await mutation({
+      const {data} = await mutation({
         variables: {
           ...this.state,
           imageUrl: imageUrl ? imageUrl : '',
@@ -60,16 +60,22 @@ class CreateForm extends React.Component {
         }
       })
 
-      console.log('Response', response)
+      if (data.payloadLoginUser) {
+        //Set token if signinForm
+        localStorage.setItem('token', data.payloadLoginUser.token)
+      }
 
-      return message.success('Successful!').then(() => {
-        if (this.props.redirect) {
-          this.props.history.push(this.props.route)
-        } else {
-          this.cleanForm()
-          this.setState({loading: false})
-        }
-      })
+      return message
+        .success(this.props.message)
+        .then(() => {
+          if (this.props.route) {
+            this.props.history.push(this.props.route)
+          } else {
+            this.cleanForm()
+            this.setState({loading: false})
+          }
+        })
+        .catch(err => console.log(err))
     } catch (err) {
       this.setState({loading: false})
       return message.error(err)
@@ -147,6 +153,7 @@ class CreateForm extends React.Component {
                     type="primary"
                     htmlType="submit"
                     className="login-form-button"
+                    disabled={this.state.loading}
                   >
                     {this.state.loading ? <Spin /> : this.props.buttonText}
                   </Button>

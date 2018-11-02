@@ -38,10 +38,11 @@ function RegisterForm(props) {
       <Mutation mutation={REGISTER_USER}>
         {registerUser => (
           <CreateFrom
+            {...props}
             fields={fields}
             buttonText={buttonText}
             route={'/login'}
-            {...props}
+            message="Success Register!"
             mutation={registerUser}
           />
         )}

@@ -1,58 +1,12 @@
 import React from 'react'
 import {compose} from 'recompose'
-import {Form, Row, Col, Card, message} from 'antd'
 import {Mutation} from 'react-apollo'
+
 import {SIGN_IN} from '../../queries'
+import CreateFrom from '../Form/CreateForm'
 
-import withForm from '../../HOC/withForm'
-
-function SignInForm({renderFields, fields, history}) {
-  const onSubmit = async (event, submit) => {
-    event.preventDefault()
-    try {
-      fields.loading = true
-      const {
-        data: {
-          payloadLoginUser: {token, user}
-        }
-      } = await submit({
-        variables: fields
-      })
-
-      localStorage.setItem('token', token)
-      return message
-        .success(`Welcome ${user.name}`)
-        .then(() => history.push('/'))
-    } catch (err) {
-      return message.error(err.message)
-    }
-  }
-
-  return (
-    <React.Fragment>
-      <Mutation mutation={SIGN_IN}>
-        {payloadLoginUser => (
-          <Row style={{marginTop: '70px'}}>
-            <Col span={7} offset={8}>
-              <Card>
-                <Form onSubmit={e => onSubmit(e, payloadLoginUser)}>
-                  {renderFields()}
-                  <a className="login-form-forgot" href="">
-                    Forgot password
-                  </a>
-                  Or <a href="/register">register now!</a>
-                </Form>
-              </Card>
-            </Col>
-          </Row>
-        )}
-      </Mutation>
-    </React.Fragment>
-  )
-}
-
-const fields = {
-  fieldTypes: [
+function SignInForm(props) {
+  const fields = [
     {inputType: 'text', type: 'inbox', name: 'email', placeholder: 'Email'},
     {
       inputType: 'password',
@@ -60,7 +14,23 @@ const fields = {
       name: 'password',
       placeholder: 'Password'
     }
-  ],
-  buttonText: 'Sign In'
+  ]
+  const buttonText = 'Sign In'
+
+  return (
+    <Mutation mutation={SIGN_IN}>
+      {payloadLoginUser => (
+        <CreateFrom
+          {...props}
+          fields={fields}
+          buttonText={buttonText}
+          route={'/'}
+          message="Welcome!"
+          mutation={payloadLoginUser}
+        />
+      )}
+    </Mutation>
+  )
 }
-export default compose(withForm(fields))(SignInForm)
+
+export default compose()(SignInForm)

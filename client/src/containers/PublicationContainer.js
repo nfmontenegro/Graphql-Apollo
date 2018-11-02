@@ -1,6 +1,8 @@
 import React from 'react'
 import Publications from '../components/Publications/Publications'
 
-export function PublicationContainer(props) {
+function PublicationContainer(props) {
   return <Publications {...props} />
 }
+
+export default PublicationContainer

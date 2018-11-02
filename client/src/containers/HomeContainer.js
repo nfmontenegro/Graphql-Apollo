@@ -1,6 +1,8 @@
 import React from 'react'
 import ListPublications from '../components/Publications/ListPublications'
 
-export function HomeContainer(props) {
+function HomeContainer(props) {
   return <ListPublications {...props} />
 }
+
+export default HomeContainer

@@ -24,7 +24,7 @@ class CreateForm extends React.Component {
   onChange = event => {
     const {name, value, type} = event.target
     this.setState({
-      [name]: type === 'number' ? parseInt(value) : value
+      [name]: type === 'number' ? parseInt(value, 10) : value
     })
   }
 
@@ -104,7 +104,7 @@ class CreateForm extends React.Component {
     return (
       <React.Fragment>
         <Row style={{marginTop: '70px'}}>
-          <Col span={7} offset={8}>
+          <Col span={8} offset={8}>
             <Card>
               <Form
                 id="create-form"

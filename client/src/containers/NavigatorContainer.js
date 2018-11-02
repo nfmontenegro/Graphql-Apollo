@@ -1,17 +1,33 @@
-import React from 'react'
+import React, {Suspense, lazy} from 'react'
 import {compose} from 'recompose'
 import {Route, withRouter} from 'react-router-dom'
-import {Avatar, Menu, Icon, Spin} from 'antd'
+import {Avatar, Menu, Icon, Spin, Row, Col} from 'antd'
 import {withApollo, Query} from 'react-apollo'
-
-import SignInFormContainer from './SignInFormContainer'
-import ProfileContainer from './ProfileContainer'
-import {HomeContainer} from './HomeContainer'
-import {PublicationContainer} from './PublicationContainer'
-import RegisterFormContainer from './RegisterFormContainer'
 
 import withAuth from '../HOC/withAuth'
 import {USER} from '../queries'
+
+const SignInFormContainer = lazy(() => import('./SignInFormContainer'))
+const ProfileContainer = lazy(() => import('./ProfileContainer'))
+const HomeContainer = lazy(() => import('./HomeContainer'))
+const PublicationContainer = lazy(() => import('./PublicationContainer'))
+const RegisterFormContainer = lazy(() => import('./RegisterFormContainer'))
+
+function WaitingComponent(Component) {
+  return props => (
+    <Suspense
+      fallback={
+        <Row style={{marginTop: '200px'}}>
+          <Col span={8} offset={11}>
+            <Spin size="large" />
+          </Col>
+        </Row>
+      }
+    >
+      <Component {...props} />
+    </Suspense>
+  )
+}
 
 const NavigatorContainer = ({history, client}) => {
   const logout = () => {
@@ -99,11 +115,20 @@ const NavigatorContainer = ({history, client}) => {
         )}
       </Menu>
 
-      <Route exact path="/" component={HomeContainer} />
-      <Route path="/signin" component={SignInFormContainer} />
-      <Route path="/register" component={RegisterFormContainer} />
-      <Route path="/publications" component={withAuth(PublicationContainer)} />
-      <Route path="/profile" component={withAuth(ProfileContainer)} />
+      <Route exact path="/" component={WaitingComponent(HomeContainer)} />
+      <Route path="/signin" component={WaitingComponent(SignInFormContainer)} />
+      <Route
+        path="/register"
+        component={WaitingComponent(RegisterFormContainer)}
+      />
+      <Route
+        path="/publications"
+        component={WaitingComponent(withAuth(PublicationContainer))}
+      />
+      <Route
+        path="/profile"
+        component={WaitingComponent(withAuth(ProfileContainer))}
+      />
     </div>
   )
 }

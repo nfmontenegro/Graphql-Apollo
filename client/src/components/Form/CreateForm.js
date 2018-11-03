@@ -82,25 +82,22 @@ class CreateForm extends React.Component {
     }
   }
 
+  beforeUpload = inputFile => {
+    this.setState({inputFile})
+    return false
+  }
+
+  onRemove = () => {
+    this.setState(prevState => {
+      console.log('PrevState:', prevState)
+    })
+  }
+
   cleanForm = () => {
     document.getElementById('create-form').reset()
   }
 
   render() {
-    const props = {
-      //pasar a funciones
-      beforeUpload: inputFile => {
-        this.setState({inputFile})
-        return false
-      },
-      onRemove: () => {
-        this.setState(prevState => ({
-          ...prevState,
-          inputFile: ''
-        }))
-      }
-    }
-
     return (
       <React.Fragment>
         <Row style={{marginTop: '70px'}}>
@@ -139,7 +136,12 @@ class CreateForm extends React.Component {
                         onChange={this.onChange}
                       />
                     ) : (
-                      <Upload name={name} listType="picture" {...props}>
+                      <Upload
+                        name={name}
+                        listType="picture"
+                        onRemove={this.onRemove}
+                        beforeUpload={this.beforeUpload}
+                      >
                         <Button>
                           <Icon type={inputType} /> Click to upload
                         </Button>

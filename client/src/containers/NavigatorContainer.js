@@ -41,8 +41,23 @@ const NavigatorContainer = ({history, client}) => {
 
   const token = localStorage.getItem('token')
   return (
-    <div>
+    <React.Fragment>
       <Menu mode="horizontal">
+        <Menu.Item
+          style={{
+            float: 'left'
+          }}
+        >
+          <img
+            src="https://dewey.tailorbrands.com/production/brand_version_mockup_image/477/1365547477_ed86ae56-ba0e-4777-915a-0f56a3ff1e19.png?cb=1541279252"
+            style={{
+              width: '50px',
+              height: '40px',
+              marginLeft: '30px'
+            }}
+            alt="logo"
+          />
+        </Menu.Item>
         {token && (
           <Menu.Item key="home" onClick={() => history.push('/')}>
             <Icon type="home" />
@@ -133,7 +148,7 @@ const NavigatorContainer = ({history, client}) => {
           component={WaitingComponent(withAuth(ProfileContainer))}
         />
       </Switch>
-    </div>
+    </React.Fragment>
   )
 }
 

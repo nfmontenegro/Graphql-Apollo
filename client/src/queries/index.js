@@ -173,6 +173,29 @@ export const LIST_PUBLICATIONS = gql`
   }
 `
 
+export const UPDATE_PUBLICATION = gql`
+  mutation UPDATE_PUBLICATION(
+    $_id: String!
+    $userId: String!
+    $title: String!
+    $description: String!
+  ) {
+    updatePublication(
+      _id: $_id
+      userId: $userId
+      title: $title
+      description: $description
+    ) {
+      title
+      description
+      user {
+        name
+        lastname
+      }
+    }
+  }
+`
+
 export const REMOVE_PUBLICATION = gql`
   mutation REMOVE_PUBLICATION($_id: String!) {
     deletePublication(_id: $_id)

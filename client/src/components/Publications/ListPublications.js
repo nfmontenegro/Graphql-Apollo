@@ -1,11 +1,16 @@
 import React from 'react'
 import {compose} from 'recompose'
-import {Avatar, Layout, List, Button, Row, Col} from 'antd'
+import {Avatar, Layout, List, Row, Col} from 'antd'
 import {Query, Mutation} from 'react-apollo'
 
-import {LIST_PUBLICATIONS, REMOVE_PUBLICATION} from '../../queries'
+import {
+  LIST_PUBLICATIONS,
+  REMOVE_PUBLICATION,
+  UPDATE_PUBLICATION
+} from '../../queries'
 import withUser from '../../HOC/withUser'
 import DeleteMutation from '../Form/DeleteMutation'
+import UpdateMutation from '../Form/UpdateMutation'
 
 const {Content} = Layout
 
@@ -57,7 +62,14 @@ function ListPublication({user}) {
                           style={{marginTop: '25px'}}
                         >
                           <Col span={6}>
-                            <Button type="primary">Update</Button>
+                            <Mutation mutation={UPDATE_PUBLICATION}>
+                              {updatePublication => (
+                                <UpdateMutation
+                                  publication={publication}
+                                  mutation={updatePublication}
+                                />
+                              )}
+                            </Mutation>
                           </Col>
                           <Col span={5}>
                             <Mutation

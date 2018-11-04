@@ -15,7 +15,11 @@ export default function withUser(WrappedComponent) {
             if (loading) return <Spin size="large" />
             return (
               <React.Fragment>
-                <WrappedComponent {...this.props} user={data.user} />
+                <WrappedComponent
+                  {...this.props}
+                  user={data.user}
+                  token={token}
+                />
               </React.Fragment>
             )
           }}

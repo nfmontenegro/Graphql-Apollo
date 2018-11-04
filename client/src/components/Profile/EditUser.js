@@ -3,10 +3,10 @@ import {Mutation} from 'react-apollo'
 import {Row, Col, Card} from 'antd'
 
 import {USER, UPDATE_USER, LIST_PUBLICATIONS} from '../../queries'
-import EditUserForm from './EditUserForm'
+import UpdateMutation from '../Form/UpdateMutation'
 
 function EditUser(props) {
-  const token = localStorage.getItem('token')
+  const {password, __typename, ...rest} = props.user
   return (
     <React.Fragment>
       <Row style={{marginTop: '70px'}}>
@@ -17,7 +17,7 @@ function EditUser(props) {
               refetchQueries={() => [
                 {
                   query: USER,
-                  variables: {token}
+                  variables: {token: props.token}
                 },
                 {
                   query: LIST_PUBLICATIONS
@@ -25,7 +25,13 @@ function EditUser(props) {
               ]}
             >
               {updateUser => {
-                return <EditUserForm {...props} updateUser={updateUser} />
+                return (
+                  <UpdateMutation
+                    data={rest}
+                    mutation={updateUser}
+                    router={props.history}
+                  />
+                )
               }}
             </Mutation>
           </Card>

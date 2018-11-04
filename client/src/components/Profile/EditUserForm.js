@@ -86,20 +86,19 @@ class EditUserForm extends React.Component {
     }
   }
 
-  render() {
-    const props = {
-      beforeUpload: inputFile => {
-        this.setState({inputFile})
-        return false
-      },
-      onRemove: () => {
-        this.setState(prevState => ({
-          ...prevState,
-          inputFile: ''
-        }))
-      }
-    }
+  beforeUpload = inputFile => {
+    this.setState({inputFile})
+    return false
+  }
 
+  onRemove = () => {
+    this.setState(prevState => ({
+      ...prevState,
+      inputFile: ''
+    }))
+  }
+
+  render() {
     return (
       <Form onSubmit={event => this.onSubmit(event, this.props.updateUser)}>
         <FormItem>
@@ -148,7 +147,12 @@ class EditUserForm extends React.Component {
           />
         </FormItem>
         <FormItem>
-          <Upload name="avatar" listType="picture" {...props}>
+          <Upload
+            name="avatar"
+            listType="picture"
+            beforeUpload={this.beforeUpload}
+            onRemove={this.onRemove}
+          >
             <Button>
               <Icon type="upload" /> Click to upload
             </Button>

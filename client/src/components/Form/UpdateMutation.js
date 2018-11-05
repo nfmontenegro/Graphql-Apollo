@@ -6,7 +6,7 @@ const FormItem = Form.Item
 
 function UpdateMutation({data, mutation, router}) {
   const [loading, setLoading] = useState(false)
-  const [form, setValues] = useState({...data})
+  const [form, setValues] = useState(data)
   const fields = Object.keys(data).map(field => field)
 
   const onChange = event => {
@@ -20,48 +20,46 @@ function UpdateMutation({data, mutation, router}) {
     event.preventDefault()
     setLoading(true)
 
-    let paramsUploadImage
-    if (form.inputFile) {
-      if (form.file) {
-        //transform to service
-        const paramsDeleteImage = {
-          Bucket: process.env.REACT_APP_AWS_BUCKET,
-          Delete: {
-            Objects: [
-              {
-                Key: form.file
-              }
-            ]
-          }
+    if (form.file) {
+      //transform to service
+
+      const paramsDeleteImage = {
+        Bucket: process.env.REACT_APP_AWS_BUCKET,
+        Delete: {
+          Objects: [
+            {
+              Key: form.file
+            }
+          ]
         }
-
-        await deleteImage(paramsDeleteImage)
-
-        paramsUploadImage = {
-          Body: form.inputFile,
-          Bucket: process.env.REACT_APP_AWS_BUCKET,
-          Key: `${new Date().getTime()}_${form._id}`,
-          ContentType: form.inputFile.type
-        }
-
-        setValues({
-          ...form,
-          imageUrl: `https://${
-            process.env.REACT_APP_AWS_BUCKET
-          }.s3.amazonaws.com/${paramsUploadImage.Key}`
-        })
-
-        await uploadImage(paramsUploadImage)
       }
+
+      await deleteImage(paramsDeleteImage)
     }
 
-    setValues({
-      file: paramsUploadImage ? paramsUploadImage.Key : ''
-    })
+    let paramsUploadImage
 
-    console.log('Form:', form)
+    if (form.inputFile) {
+      paramsUploadImage = {
+        Body: form.inputFile,
+        Bucket: process.env.REACT_APP_AWS_BUCKET,
+        Key: `${new Date().getTime()}_${form._id}`,
+        ContentType: form.inputFile.type
+      }
+
+      await uploadImage(paramsUploadImage)
+    }
+
     await mutation({
-      variables: form
+      variables: {
+        ...form,
+        file: paramsUploadImage ? paramsUploadImage.Key : '',
+        imageUrl: paramsUploadImage
+          ? `https://${process.env.REACT_APP_AWS_BUCKET}.s3.amazonaws.com/${
+              paramsUploadImage.Key
+            }`
+          : ''
+      }
     })
 
     message
@@ -86,7 +84,7 @@ function UpdateMutation({data, mutation, router}) {
   }
 
   return (
-    <Form onSubmit={event => onSubmit(event, mutation)}>
+    <Form onSubmit={onSubmit}>
       {fields
         .filter(data => data !== 'file' && data !== '_id')
         .map((field, index) => (

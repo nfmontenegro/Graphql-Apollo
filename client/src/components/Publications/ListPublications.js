@@ -61,16 +61,7 @@ function ListPublication({user}) {
                           justify="start"
                           style={{marginTop: '25px'}}
                         >
-                          <Col span={6}>
-                            <Mutation mutation={UPDATE_PUBLICATION}>
-                              {updatePublication => (
-                                <UpdateMutation
-                                  publication={publication}
-                                  mutation={updatePublication}
-                                />
-                              )}
-                            </Mutation>
-                          </Col>
+                          <Col span={6}>Update!</Col>
                           <Col span={5}>
                             <Mutation
                               mutation={REMOVE_PUBLICATION}

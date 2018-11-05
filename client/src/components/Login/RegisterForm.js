@@ -41,7 +41,7 @@ function RegisterForm(props) {
             {...props}
             fields={fields}
             buttonText={buttonText}
-            route={'/login'}
+            route={'/signin'}
             message="Success Register!"
             mutation={registerUser}
           />

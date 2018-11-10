@@ -27,6 +27,9 @@ const PublicationSchema = new mongoose.Schema({
   imageUrl: {
     type: String
   },
+  file: {
+    type: String
+  },
   createdOn: {
     type: Date,
     default: Date.now

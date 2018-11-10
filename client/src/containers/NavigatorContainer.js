@@ -78,7 +78,7 @@ const NavigatorContainer = ({history, client}) => {
               <span className="submenu-title-wrapper">
                 <Query query={USER} variables={{token: token}}>
                   {({loading, data: {user}}) => {
-                    if (loading) return <Spin size="large" />
+                    if (loading) return null
                     return (
                       <div>
                         <Avatar

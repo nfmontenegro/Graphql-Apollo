@@ -56,6 +56,7 @@ class CreateForm extends React.Component {
         variables: {
           ...this.state,
           imageUrl: imageUrl ? imageUrl : '',
+          file: paramsUploadImage ? paramsUploadImage.Key : '',
           user: this.props.user ? this.props.user._id : ''
         }
       })
@@ -119,8 +120,8 @@ class CreateForm extends React.Component {
                         onChange={this.onChange}
                       />
                     ) : inputType === 'text' ||
-                    inputType === 'password' ||
-                    inputType === 'number' ? (
+                      inputType === 'password' ||
+                      inputType === 'number' ? (
                       <Input
                         prefix={
                           <Icon

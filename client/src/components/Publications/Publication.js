@@ -20,7 +20,7 @@ function Publication(props) {
   const _id = props.params
   return (
     <Query query={LIST_PUBLICATION} variables={{_id}}>
-      {({data, loading, error}) => {
+      {({data, loading}) => {
         if (loading) return null
         return (
           <Mutation

@@ -11,6 +11,7 @@ type Mutation {
     description: String!
     content: String!
     imageUrl: String
+    file: String
     user: String!
   ): Publication!
 
@@ -20,6 +21,7 @@ type Mutation {
     title: String
     description: String
     imageUrl: String
+    file: String
     content: String
   ): Publication!
 }
@@ -31,6 +33,7 @@ type Publication {
   description: String
   content: String
   imageUrl: String
+  file: String
   user: UserInfo!
   createdOn: String
   formatDate: String

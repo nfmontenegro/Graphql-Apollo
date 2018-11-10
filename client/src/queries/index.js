@@ -130,6 +130,7 @@ export const CREATE_PUBLICATION = gql`
     $content: String!
     $user: String!
     $imageUrl: String
+    $file: String
   ) {
     createPublication(
       title: $title
@@ -137,12 +138,14 @@ export const CREATE_PUBLICATION = gql`
       content: $content
       user: $user
       imageUrl: $imageUrl
+      file: $file
     ) {
       _id
       title
       description
       content
       imageUrl
+      file
       user {
         name
         lastname
@@ -161,6 +164,7 @@ export const LIST_PUBLICATIONS = gql`
       content
       formatDate
       imageUrl
+      file
       user {
         _id
         phoneNumber
@@ -180,6 +184,8 @@ export const UPDATE_PUBLICATION = gql`
     $title: String!
     $description: String!
     $content: String!
+    $imageUrl: String!
+    $file: String!
   ) {
     updatePublication(
       _id: $_id
@@ -187,10 +193,14 @@ export const UPDATE_PUBLICATION = gql`
       title: $title
       description: $description
       content: $content
+      imageUrl: $imageUrl
+      file: $file
     ) {
       title
       description
       content
+      imageUrl
+      file
       user {
         name
         lastname
@@ -207,6 +217,8 @@ export const LIST_PUBLICATION = gql`
       description
       content
       formatDate
+      imageUrl
+      file
       user {
         _id
         name

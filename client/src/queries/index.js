@@ -179,19 +179,35 @@ export const UPDATE_PUBLICATION = gql`
     $userId: String!
     $title: String!
     $description: String!
+    $content: String!
   ) {
     updatePublication(
       _id: $_id
       userId: $userId
       title: $title
       description: $description
+      content: $content
     ) {
       title
       description
+      content
       user {
         name
         lastname
       }
+    }
+  }
+`
+
+export const LIST_PUBLICATION = gql`
+  query LIST_PUBLICATION($_id: String!) {
+    listPublication(_id: $_id) {
+      _id
+      title
+      description
+      content
+      formatDate
+      createdOn
     }
   }
 `

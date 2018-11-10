@@ -1,23 +1,20 @@
 import React from 'react'
 import {compose} from 'recompose'
-import {Avatar, Layout, List, Row, Col} from 'antd'
+import {withRouter} from 'react-router-dom'
+import {Avatar, Layout, List, Row, Col, Button} from 'antd'
 import {Query, Mutation} from 'react-apollo'
 
-import {
-  LIST_PUBLICATIONS,
-  REMOVE_PUBLICATION,
-  UPDATE_PUBLICATION
-} from '../../queries'
+import {LIST_PUBLICATIONS, REMOVE_PUBLICATION} from '../../queries'
 import withUser from '../../HOC/withUser'
 import DeleteMutation from '../Form/DeleteMutation'
-import UpdateMutation from '../Form/UpdateMutation'
 
 const {Content} = Layout
 
-function ListPublication({user}) {
+function ListPublication({user, history}) {
   return (
     <Query query={LIST_PUBLICATIONS}>
-      {({data}) => {
+      {({data, loading}) => {
+        if (loading) return null
         return (
           <Content style={{padding: '50px 300px 50px 300px'}}>
             <List
@@ -61,7 +58,16 @@ function ListPublication({user}) {
                           justify="start"
                           style={{marginTop: '25px'}}
                         >
-                          <Col span={6}>Update!</Col>
+                          <Col span={6}>
+                            <Button
+                              type="primary"
+                              onClick={() =>
+                                history.push(`/publications/${publication._id}`)
+                              }
+                            >
+                              Update
+                            </Button>
+                          </Col>
                           <Col span={5}>
                             <Mutation
                               mutation={REMOVE_PUBLICATION}
@@ -93,4 +99,7 @@ function ListPublication({user}) {
   )
 }
 
-export default compose(withUser)(ListPublication)
+export default compose(
+  withRouter,
+  withUser
+)(ListPublication)

@@ -64,7 +64,10 @@ function UpdateMutation({data, mutation, router}) {
 
     message
       .success('Successful update!')
-      .then(() => router.push('/profile'))
+      .then(() => {
+        if (router) router.push('/profile')
+        setLoading(false)
+      })
       .catch(err => console.log(err))
   }
 
@@ -86,7 +89,13 @@ function UpdateMutation({data, mutation, router}) {
   return (
     <Form onSubmit={onSubmit}>
       {fields
-        .filter(data => data !== 'file' && data !== '_id')
+        .filter(
+          data =>
+            data !== 'file' &&
+            data !== '_id' &&
+            data !== 'userId' &&
+            data !== '__typename'
+        )
         .map((field, index) => (
           <FormItem key={index}>
             {field.includes('image') ? (

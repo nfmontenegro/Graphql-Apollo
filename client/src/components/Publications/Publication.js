@@ -12,7 +12,7 @@ import UpdateMutation from '../Form/UpdateMutation'
 import withUser from '../../HOC/withUser'
 
 function removeProperty(listPublication) {
-  const {createdOn, formatDate, ...rest} = listPublication
+  const {user, createdOn, formatDate, ...rest} = listPublication
   return rest
 }
 
@@ -22,37 +22,32 @@ function Publication(props) {
     <Query query={LIST_PUBLICATION} variables={{_id}}>
       {({data, loading, error}) => {
         if (loading) return null
-        if (error) return `Err: ${error}`
-        if (data.listPublication) {
-          return (
-            <Mutation
-              mutation={UPDATE_PUBLICATION}
-              refetchQueries={() => [
-                {
-                  query: LIST_PUBLICATIONS
-                }
-              ]}
-            >
-              {updatePublication => {
-                const publication = removeProperty(data.listPublication)
-                return (
-                  <Row style={{marginTop: '70px'}}>
-                    <Col span={7} offset={8}>
-                      <Card>
-                        <UpdateMutation
-                          data={{...publication, userId: props.user._id}}
-                          mutation={updatePublication}
-                        />
-                      </Card>
-                    </Col>
-                  </Row>
-                )
-              }}
-            </Mutation>
-          )
-        } else {
-          return `Err: ${error}`
-        }
+        return (
+          <Mutation
+            mutation={UPDATE_PUBLICATION}
+            refetchQueries={() => [
+              {
+                query: LIST_PUBLICATIONS
+              }
+            ]}
+          >
+            {updatePublication => {
+              const publication = removeProperty(data.listPublication)
+              return (
+                <Row style={{marginTop: '70px'}}>
+                  <Col span={7} offset={8}>
+                    <Card>
+                      <UpdateMutation
+                        data={{...publication, userId: props.user._id}}
+                        mutation={updatePublication}
+                      />
+                    </Card>
+                  </Col>
+                </Row>
+              )
+            }}
+          </Mutation>
+        )
       }}
     </Query>
   )

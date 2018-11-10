@@ -207,6 +207,15 @@ export const LIST_PUBLICATION = gql`
       description
       content
       formatDate
+      user {
+        _id
+        name
+        lastname
+        email
+        nickname
+        phoneNumber
+        website
+      }
       createdOn
     }
   }

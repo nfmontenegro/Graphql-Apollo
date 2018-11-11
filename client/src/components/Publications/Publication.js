@@ -11,7 +11,7 @@ import {
 import UpdateMutation from '../Form/UpdateMutation'
 import withUser from '../../HOC/withUser'
 
-function removeProperty(listPublication) {
+function removePropertys(listPublication) {
   const {user, createdOn, formatDate, ...rest} = listPublication
   return rest
 }
@@ -20,7 +20,7 @@ function Publication(props) {
   const _id = props.params
   return (
     <Query query={LIST_PUBLICATION} variables={{_id}}>
-      {({data, loading}) => {
+      {({data: {listPublication} = {}, loading}) => {
         if (loading) return null
         return (
           <Mutation
@@ -32,7 +32,7 @@ function Publication(props) {
             ]}
           >
             {updatePublication => {
-              const publication = removeProperty(data.listPublication)
+              const publication = removePropertys(listPublication)
               return (
                 <Row style={{marginTop: '70px'}}>
                   <Col span={7} offset={8}>

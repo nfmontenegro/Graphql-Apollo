@@ -4,7 +4,7 @@ import {Button, Modal, message} from 'antd'
 function DeleteMutation({_id, mutation}) {
   const [visible, setVisible] = useState(false)
 
-  const clickMutation = async () => {
+  const onSubmit = async () => {
     await mutation({variables: {_id}})
     message.success('Successful removed')
     return null
@@ -18,7 +18,7 @@ function DeleteMutation({_id, mutation}) {
       <Modal
         title="Delete Item"
         visible={visible}
-        onOk={() => clickMutation()}
+        onOk={() => onSubmit()}
         onCancel={() => setVisible(false)}
       >
         <p>Are sure you want delete this item?</p>

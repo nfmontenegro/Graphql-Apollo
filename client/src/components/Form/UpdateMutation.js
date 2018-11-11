@@ -21,8 +21,6 @@ function UpdateMutation({data, mutation, router}) {
     setLoading(true)
 
     if (form.file) {
-      //transform to service
-
       const paramsDeleteImage = {
         Bucket: process.env.REACT_APP_AWS_BUCKET,
         Delete: {

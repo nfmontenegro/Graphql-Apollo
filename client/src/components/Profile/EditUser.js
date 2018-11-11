@@ -6,7 +6,7 @@ import {USER, UPDATE_USER, LIST_PUBLICATIONS} from '../../queries'
 import UpdateMutation from '../Form/UpdateMutation'
 
 function EditUser(props) {
-  const {password, __typename, ...rest} = props.user
+  const {password, ...rest} = props.user
   return (
     <React.Fragment>
       <Row style={{marginTop: '70px'}}>

@@ -12,10 +12,10 @@ async function uploadImage(options) {
 
   return new Promise((resolve, reject) => {
     s3.putObject(options, (err, data) => {
-      if (err) return reject(err)
+      if (err) reject(err)
 
       console.log('Image uploaded...')
-      return resolve(data)
+      resolve(data)
     })
   })
 }
@@ -26,7 +26,7 @@ async function deleteImage(options) {
 
   return new Promise((resolve, reject) => {
     s3.deleteObjects(options, (err, data) => {
-      if (err) return reject(err)
+      if (err) reject(err)
 
       console.log('Image deleted...')
       resolve(data)

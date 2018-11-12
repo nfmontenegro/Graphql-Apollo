@@ -20,6 +20,7 @@ function UpdateMutation({data, mutation, router}) {
     event.preventDefault()
     setLoading(true)
 
+    let paramsUploadImage
     if (form.file) {
       const paramsDeleteImage = {
         Bucket: process.env.REACT_APP_AWS_BUCKET,
@@ -35,8 +36,6 @@ function UpdateMutation({data, mutation, router}) {
       await deleteImage(paramsDeleteImage)
     }
 
-    let paramsUploadImage
-
     if (form.inputFile) {
       paramsUploadImage = {
         Body: form.inputFile,
@@ -51,12 +50,12 @@ function UpdateMutation({data, mutation, router}) {
     await mutation({
       variables: {
         ...form,
-        file: paramsUploadImage ? paramsUploadImage.Key : '',
+        file: paramsUploadImage ? paramsUploadImage.Key : data.file,
         imageUrl: paramsUploadImage
           ? `https://${process.env.REACT_APP_AWS_BUCKET}.s3.amazonaws.com/${
               paramsUploadImage.Key
             }`
-          : ''
+          : data.imageUrl
       }
     })
 
@@ -95,7 +94,10 @@ function UpdateMutation({data, mutation, router}) {
             data !== '__typename'
         )
         .map((field, index) => (
-          <FormItem key={index}>
+          <FormItem
+            key={index}
+            label={field.charAt(0).toUpperCase() + field.slice(1)}
+          >
             {field.includes('image') ? (
               <Upload
                 name="inputFile"

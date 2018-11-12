@@ -5,6 +5,10 @@ html {
   font-family: 'Fira Sans';
 }
 
+body {
+  background-color: #fdfdfd;
+}
+
 .ant-btn-primary {
   background-color: #0f2ff1;
 }
@@ -23,8 +27,48 @@ html {
 
 .ant-menu {
   box-shadow: 0 0 10px 0 rgba(0,0,0,.12), 0 2px 3px 0 rgba(0,0,0,.16);
-  background-color: #fff;
+  background-color: #2196f3;
   border-bottom: 1px solid #cacad9;
   font-family: 'Fira Sans';
+  color: #f3f3f3;
+}
+
+.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+  color: #f6f6f6;
+}
+
+.ant-menu-horizontal > .ant-menu-item-selected {
+  color: #f6f6f6;
+  border-bottom: 2px solid #2979ff;
+}
+
+.ant-menu-submenu-title {
+  color: #fff;
+}
+
+.ant-menu-submenu-title:hover {
+  color: #f6f6f6;
+}
+
+li.ant-menu-item-active {
+  color: black;
+}
+
+
+.ant-menu-item-group-list .ant-menu-item {
+  color: black;
+}
+
+.ant-menu-item-group-list .ant-menu-item:hover {
+  color: #2196f3;
+}
+
+.ant-menu-horizontal > .ant-menu-item:hover {
+  color: #f6f6f6;
+}
+
+ul.ant-card-actions: {
+  color: white;
+  background-color: #2196f3;
 }
 

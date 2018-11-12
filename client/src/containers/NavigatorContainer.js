@@ -49,7 +49,7 @@ const NavigatorContainer = ({history, client}) => {
           }}
         >
           <img
-            src="https://dewey.tailorbrands.com/production/brand_version_mockup_image/477/1365547477_ed86ae56-ba0e-4777-915a-0f56a3ff1e19.png?cb=1541279252"
+            src=""
             style={{
               width: '50px',
               height: '40px',

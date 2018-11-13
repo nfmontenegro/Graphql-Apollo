@@ -58,7 +58,7 @@ function ListPublication({user, history}) {
                           justify="start"
                           style={{marginTop: '25px'}}
                         >
-                          <Col span={6}>
+                          <Col span={3}>
                             <Button
                               type="primary"
                               onClick={() =>

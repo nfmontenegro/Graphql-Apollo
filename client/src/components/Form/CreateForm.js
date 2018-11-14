@@ -109,7 +109,10 @@ class CreateForm extends React.Component {
                 onSubmit={event => this.onSubmit(event, this.props.mutation)}
               >
                 {this.props.fields.map(({inputType, type, name}, index) => (
-                  <FormItem key={index}>
+                  <FormItem
+                    key={index}
+                    label={name.charAt(0).toUpperCase() + name.slice(1)}
+                  >
                     {inputType === 'textarea' ? (
                       <TextArea
                         type={inputType}

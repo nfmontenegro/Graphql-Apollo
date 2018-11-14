@@ -6,7 +6,7 @@ html {
 }
 
 body {
-  background-color: #fdfdfd;
+  background-color: white;
 }
 
 .ant-btn-primary {
@@ -27,7 +27,7 @@ body {
 
 .ant-menu {
   box-shadow: 0 0 10px 0 rgba(0,0,0,.12), 0 2px 3px 0 rgba(0,0,0,.16);
-  background-color: #2196f3;
+  background-color: #0f2ff1;
   border-bottom: 1px solid #cacad9;
   font-family: 'Fira Sans';
   color: #f3f3f3;
@@ -35,11 +35,12 @@ body {
 
 .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
   color: #f6f6f6;
+  border-bottom: 2px solid white;
 }
 
 .ant-menu-horizontal > .ant-menu-item-selected {
   color: #f6f6f6;
-  border-bottom: 2px solid #2979ff;
+  border-bottom: 2px solid white;
 }
 
 .ant-menu-submenu-title {
@@ -47,7 +48,7 @@ body {
 }
 
 .ant-menu-submenu-title:hover {
-  color: #f6f6f6;
+  color: #eff1f3;
 }
 
 li.ant-menu-item-active {
@@ -61,10 +62,12 @@ li.ant-menu-item-active {
 
 .ant-menu-item-group-list .ant-menu-item:hover {
   color: #2196f3;
+  background-color: #eff1f3;
 }
 
 .ant-menu-horizontal > .ant-menu-item:hover {
-  color: #f6f6f6;
+  color: #eff1f3;
+  border-bottom: 2px solid white;
 }
 
 .ant-list-item {
@@ -86,11 +89,29 @@ li.ant-menu-item-active {
   top: 3%;
   margin-left: -250px;
   width: 230px;
-  height: 230px;
+  height: 180px;
 }
 
-ul.ant-card-actions: {
-  color: white;
-  background-color: #2196f3;
+.ant-menu-vertical .ant-menu-item {
+  margin: 0px
 }
+
+.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+    color: black;
+}
+
+.ant-card-actions {
+  background: #0f2ff1;
+}
+
+.ant-card-actions .anticon svg {
+  color: #d4d4d4;
+}
+
+.ant-menu-horizontal > .ant-menu-submenu:hover,
+.ant-menu-horizontal > .ant-menu-item-active,
+.ant-menu-horizontal > .ant-menu-submenu:hover {
+  border-bottom: 2px solid white;
+}
+
 

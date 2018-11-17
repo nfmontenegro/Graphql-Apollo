@@ -1,5 +1,5 @@
 type Query {
-   listPublications: [Publication!]!
+   listPublications(limit: Int, offset: Int): [Publication!]!
    listPublication(_id: String!): Publication
 }
 

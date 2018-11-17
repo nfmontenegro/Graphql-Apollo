@@ -1,7 +1,7 @@
 import React from 'react'
 import {compose} from 'recompose'
 import {withRouter} from 'react-router-dom'
-import {Avatar, Layout, List, Row, Col, Button} from 'antd'
+import {Avatar, Layout, List, Row, Col, Button, Pagination} from 'antd'
 import {Query, Mutation} from 'react-apollo'
 
 import {LIST_PUBLICATIONS, REMOVE_PUBLICATION} from '../../queries'
@@ -10,10 +10,31 @@ import DeleteMutation from '../Form/DeleteMutation'
 
 const {Content} = Layout
 
+function onLoadMore(fetchMore, {listPublications}) {
+  console.log('Load more!')
+  return fetchMore({
+    variables: {
+      offset: listPublications.length
+    },
+    updateQuery: (prev, {fetchMoreResult}) => {
+      if (!fetchMoreResult) return prev
+      return {
+        prev,
+        ...{
+          listPublications: [
+            ...prev.listPublications,
+            ...fetchMoreResult.listPublications
+          ]
+        }
+      }
+    }
+  })
+}
+
 function ListPublication({user, history}) {
   return (
-    <Query query={LIST_PUBLICATIONS}>
-      {({data, loading}) => {
+    <Query query={LIST_PUBLICATIONS} variables={{limit: 2, offset: 0}}>
+      {({data, loading, fetchMore}) => {
         if (loading) return null
         return (
           <Content style={{padding: '50px 300px 50px 300px'}}>
@@ -92,6 +113,9 @@ function ListPublication({user, history}) {
                 )
               }}
             />
+            <Button onClick={() => onLoadMore(fetchMore, data)}>
+              Load More!
+            </Button>
           </Content>
         )
       }}

@@ -2,8 +2,12 @@ import dayjs from 'dayjs'
 
 export default {
   Query: {
-    listPublications: async (_, params, {models: {Publication}}) =>
-      await Publication.find({}).populate('user'),
+    listPublications: async (_, {limit, offset}, {models: {Publication}}) => {
+      return await Publication.find({})
+        .skip(offset)
+        .limit(limit)
+        .populate('user')
+    },
     listPublication: async (_, {_id}, {models: {Publication}}) => {
       const publication = await Publication.findOne({_id}).populate('user')
       if (publication) {

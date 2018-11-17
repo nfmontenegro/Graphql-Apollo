@@ -156,8 +156,8 @@ export const CREATE_PUBLICATION = gql`
   }
 `
 export const LIST_PUBLICATIONS = gql`
-  query LIST_PUBLICATIONS {
-    listPublications {
+  query LIST_PUBLICATIONS($limit: Int, $offset: Int) {
+    listPublications(limit: $limit, offset: $offset) {
       _id
       title
       description

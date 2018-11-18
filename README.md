@@ -80,7 +80,7 @@ export const App = () => (
 
 Now config new Wrapper to check if user is have token, if it does not have, redirect to login page
 
-```
+```javascript
 export default function withAuth(WrappedComponent) {
   return class extends React.Component {
     render() {

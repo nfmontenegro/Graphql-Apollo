@@ -33,8 +33,8 @@ function onLoadMore(fetchMore, {listPublications}) {
 
 function ListPublication({user, history}) {
   return (
-    <Query query={LIST_PUBLICATIONS} variables={{limit: 2, offset: 0}}>
-      {({data, loading, fetchMore}) => {
+    <Query query={LIST_PUBLICATIONS} variables={{limit: 3, offset: 0}}>
+      {({data, loading, fetchMore, refetch}) => {
         if (loading) return null
         return (
           <Content style={{padding: '50px 300px 50px 300px'}}>
@@ -90,18 +90,12 @@ function ListPublication({user, history}) {
                             </Button>
                           </Col>
                           <Col span={5}>
-                            <Mutation
-                              mutation={REMOVE_PUBLICATION}
-                              refetchQueries={() => [
-                                {
-                                  query: LIST_PUBLICATIONS
-                                }
-                              ]}
-                            >
+                            <Mutation mutation={REMOVE_PUBLICATION}>
                               {deletePublication => (
                                 <DeleteMutation
                                   _id={publication._id}
                                   mutation={deletePublication}
+                                  refetch={refetch}
                                 />
                               )}
                             </Mutation>
@@ -113,9 +107,14 @@ function ListPublication({user, history}) {
                 )
               }}
             />
-            <Button onClick={() => onLoadMore(fetchMore, data)}>
-              Load More!
-            </Button>
+            <div style={{textAlign: 'center'}}>
+              <Button
+                onClick={() => onLoadMore(fetchMore, data)}
+                style={{marginTop: '40px'}}
+              >
+                Load More!
+              </Button>
+            </div>
           </Content>
         )
       }}

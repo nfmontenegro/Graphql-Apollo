@@ -32,7 +32,8 @@ function CreatePublication(props) {
       mutation={CREATE_PUBLICATION}
       refetchQueries={() => [
         {
-          query: LIST_PUBLICATIONS
+          query: LIST_PUBLICATIONS,
+          variables: {offset: 0, limit: 3}
         }
       ]}
     >

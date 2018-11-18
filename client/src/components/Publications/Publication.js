@@ -27,7 +27,8 @@ function Publication(props) {
             mutation={UPDATE_PUBLICATION}
             refetchQueries={() => [
               {
-                query: LIST_PUBLICATIONS
+                query: LIST_PUBLICATIONS,
+                variables: {limit: 3, offset: 0}
               }
             ]}
           >

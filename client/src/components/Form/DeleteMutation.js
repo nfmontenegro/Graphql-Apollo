@@ -1,12 +1,14 @@
 import React, {useState} from 'react'
 import {Button, Modal, message} from 'antd'
 
-function DeleteMutation({_id, mutation}) {
+function DeleteMutation({_id, mutation, refetch}) {
   const [visible, setVisible] = useState(false)
 
   const onSubmit = async () => {
     await mutation({variables: {_id}})
     message.success('Successful removed')
+    refetch()
+    setVisible(false)
     return null
   }
 

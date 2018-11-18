@@ -109,6 +109,30 @@ export default function withAuth(WrappedComponent) {
 }
 ```
 
+In the Routes we check with the wrapper if user is authenticated with token
+
+```javascript
+  <Switch>
+    <Route exact path="/" component={WaitingComponent(HomeContainer)} />
+    <Route
+      path="/signin"
+      component={WaitingComponent(SignInFormContainer)}
+    />
+    <Route
+      path="/register"
+      component={WaitingComponent(RegisterFormContainer)}
+    />
+    <Route
+      path="/publications"
+      component={WaitingComponent(withAuth(PublicationContainer))}
+    />
+    <Route
+      path="/profile"
+      component={WaitingComponent(withAuth(ProfileContainer))}
+    />
+  </Switch>
+```
+
 
 In the backend we config a resolver to check token
 
@@ -160,5 +184,49 @@ server.express.use(async (req, res, next) => {
 
 In every resolver you call your variable middleware and check if exist
 
+```javascript
+user: async (_, {token}, {models: {User}, request: {userAccess}}) => 
 ```
-	    user: async (_, {token}, {models: {User}, request: {userAccess}}) => ```
+
+	
+In the login resolver we payload response with the token, first we check secret password and verify is valid and return token
+
+```javascript
+ payloadLoginUser: async (
+  _,
+  {email, password},
+  {models: {User}, ...rest}
+) => {
+  const user = await User.findOne({
+    email
+  })
+
+  if (!user) {
+    return new Error(`No user with that email: ${email}`)
+  }
+
+  const valid = await bcrypt.compare(password, user.password)
+
+  if (!valid) {
+    return new Error('Invalid Password')
+  }
+
+  const token = jwt.sign(
+    {
+      id: user._id,
+      email: user.email
+    },
+    process.env.SECRET_PASSWORD,
+    {
+      expiresIn: '1y'
+    }
+  )
+
+  return {
+    user,
+    token,
+    status: 200
+  }
+},
+```
+	

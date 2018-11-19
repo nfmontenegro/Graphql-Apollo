@@ -13,6 +13,8 @@ import {
 } from 'antd'
 import {uploadImage} from '../../services/aws'
 
+import {WrapperForm} from '../../styled/'
+
 const FormItem = Form.Item
 const {TextArea} = Input
 
@@ -101,73 +103,75 @@ class CreateForm extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <Row style={{marginTop: '70px'}}>
-          <Col span={8} offset={8}>
-            <Card>
-              <Form
-                id="create-form"
-                onSubmit={event => this.onSubmit(event, this.props.mutation)}
-              >
-                {this.props.fields.map(({inputType, type, name}, index) => (
-                  <FormItem
-                    key={index}
-                    label={name.charAt(0).toUpperCase() + name.slice(1)}
-                  >
-                    {inputType === 'textarea' ? (
-                      <TextArea
-                        type={inputType}
-                        name={name}
-                        placeholder={
-                          name.charAt(0).toUpperCase() + name.slice(1)
-                        }
-                        onChange={this.onChange}
-                      />
-                    ) : inputType === 'text' ||
-                      inputType === 'password' ||
-                      inputType === 'number' ? (
-                      <Input
-                        prefix={
-                          <Icon
-                            type={type}
-                            style={{color: 'rgba(0,0,0,.25)'}}
-                          />
-                        }
-                        type={inputType}
-                        name={name}
-                        placeholder={
-                          name.charAt(0).toUpperCase() + name.slice(1)
-                        }
-                        onChange={this.onChange}
-                      />
-                    ) : (
-                      <Upload
-                        name={name}
-                        listType="picture"
-                        onRemove={this.onRemove}
-                        beforeUpload={this.beforeUpload}
-                      >
-                        <Button>
-                          <Icon type={inputType} /> Click to upload
-                        </Button>
-                      </Upload>
-                    )}
+        <WrapperForm>
+          <Row>
+            <Col span={8} offset={8}>
+              <Card>
+                <Form
+                  id="create-form"
+                  onSubmit={event => this.onSubmit(event, this.props.mutation)}
+                >
+                  {this.props.fields.map(({inputType, type, name}, index) => (
+                    <FormItem
+                      key={index}
+                      label={name.charAt(0).toUpperCase() + name.slice(1)}
+                    >
+                      {inputType === 'textarea' ? (
+                        <TextArea
+                          type={inputType}
+                          name={name}
+                          placeholder={
+                            name.charAt(0).toUpperCase() + name.slice(1)
+                          }
+                          onChange={this.onChange}
+                        />
+                      ) : inputType === 'text' ||
+                        inputType === 'password' ||
+                        inputType === 'number' ? (
+                        <Input
+                          prefix={
+                            <Icon
+                              type={type}
+                              style={{color: 'rgba(0,0,0,.25)'}}
+                            />
+                          }
+                          type={inputType}
+                          name={name}
+                          placeholder={
+                            name.charAt(0).toUpperCase() + name.slice(1)
+                          }
+                          onChange={this.onChange}
+                        />
+                      ) : (
+                        <Upload
+                          name={name}
+                          listType="picture"
+                          onRemove={this.onRemove}
+                          beforeUpload={this.beforeUpload}
+                        >
+                          <Button>
+                            <Icon type={inputType} /> Click to upload
+                          </Button>
+                        </Upload>
+                      )}
+                    </FormItem>
+                  ))}
+                  <FormItem>
+                    <Button
+                      style={{width: '100%'}}
+                      type="primary"
+                      htmlType="submit"
+                      className="login-form-button"
+                      disabled={this.state.loading}
+                    >
+                      {this.state.loading ? <Spin /> : this.props.buttonText}
+                    </Button>
                   </FormItem>
-                ))}
-                <FormItem>
-                  <Button
-                    style={{width: '100%'}}
-                    type="primary"
-                    htmlType="submit"
-                    className="login-form-button"
-                    disabled={this.state.loading}
-                  >
-                    {this.state.loading ? <Spin /> : this.props.buttonText}
-                  </Button>
-                </FormItem>
-              </Form>
-            </Card>
-          </Col>
-        </Row>
+                </Form>
+              </Card>
+            </Col>
+          </Row>
+        </WrapperForm>
       </React.Fragment>
     )
   }

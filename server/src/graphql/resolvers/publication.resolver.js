@@ -24,7 +24,6 @@ export default {
       {models: {Publication}, request: {userAccess}}
     ) => {
       if (!userAccess) return new Error(`Don't have permissions`)
-
       const {_id} = await Publication.create({
         title,
         description,
@@ -54,7 +53,6 @@ export default {
       )
 
       if (!publication) return new Error(`Can't update this publication`)
-
       return await Publication.findOne({_id}).populate('user')
     },
     deletePublication: async (

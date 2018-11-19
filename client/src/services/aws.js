@@ -8,7 +8,9 @@ AWS.config.update({
 
 async function uploadImage(options) {
   console.log('Uploading image...')
-  const s3 = new AWS.S3({signatureVersion: 'v4'})
+  const s3 = new AWS.S3({
+    signatureVersion: 'v4'
+  })
 
   return new Promise((resolve, reject) => {
     s3.putObject(options, (err, data) => {

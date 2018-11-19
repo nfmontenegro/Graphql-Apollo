@@ -152,7 +152,7 @@ export const TOKEN = gql`
 
 Resolver GraphQL
 
-```
+```javascript
  checkToken: async (_, params, {request: {userAccess}}) => {
 	 if (!userAccess) return new Error(`Don't have permissions`)
      return {status: 200, message: 'Success token'}

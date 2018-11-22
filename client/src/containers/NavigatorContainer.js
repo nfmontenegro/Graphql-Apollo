@@ -5,6 +5,7 @@ import {Avatar, Menu, Icon, Spin, Row, Col} from 'antd'
 import {withApollo, Query} from 'react-apollo'
 
 import withAuth from '../HOC/withAuth'
+import logo from '../assets/logo.png'
 import {USER} from '../queries'
 
 const SignInFormContainer = lazy(() => import('./SignInFormContainer'))
@@ -49,7 +50,7 @@ const NavigatorContainer = ({history, client}) => {
           }}
         >
           <img
-            src=""
+            src={logo}
             style={{
               width: '50px',
               height: '40px',

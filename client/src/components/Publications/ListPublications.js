@@ -21,6 +21,7 @@ function onLoadMore(fetchMore, listPublications, setLoadMore) {
     variables: {
       offset: listPublications.length
     },
+
     updateQuery: (prev, {fetchMoreResult}) => {
       if (!fetchMoreResult) return prev
       if (fetchMoreResult.listPublications.length === 0) setLoadMore(false)
@@ -54,7 +55,7 @@ function ListPublication({user, history}) {
 
   return (
     <Query query={LIST_PUBLICATIONS} variables={{limit: 5, offset: 0}}>
-      {({data, loading, fetchMore, refetch}) => {
+      {({data, loading, fetchMore}) => {
         if (loading) return null
         return (
           <ContentCardPublications>
@@ -113,12 +114,22 @@ function ListPublication({user, history}) {
                               </Button>
                             </Col>
                             <Col span={5}>
-                              <Mutation mutation={REMOVE_PUBLICATION}>
+                              <Mutation
+                                mutation={REMOVE_PUBLICATION}
+                                refetchQueries={() => [
+                                  {
+                                    query: LIST_PUBLICATIONS,
+                                    variables: {
+                                      limit: 5,
+                                      offset: 0
+                                    }
+                                  }
+                                ]}
+                              >
                                 {deletePublication => (
                                   <DeleteMutation
                                     _id={publication._id}
                                     mutation={deletePublication}
-                                    refetch={refetch}
                                   />
                                 )}
                               </Mutation>

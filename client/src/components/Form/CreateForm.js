@@ -92,11 +92,15 @@ class CreateForm extends React.Component {
 
   onRemove = () => {
     this.setState(prevState => {
-      console.log('PrevState:', prevState)
+      return {
+        ...prevState,
+        inputFile: ''
+      }
     })
   }
 
   cleanForm = () => {
+    this.setState({inputFile: ''})
     document.getElementById('create-form').reset()
   }
 

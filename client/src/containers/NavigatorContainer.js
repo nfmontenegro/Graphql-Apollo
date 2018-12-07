@@ -5,7 +5,6 @@ import {Avatar, Menu, Icon, Spin, Row, Col} from 'antd'
 import {withApollo, Query} from 'react-apollo'
 
 import withAuth from '../HOC/withAuth'
-import logo from '../assets/logo.png'
 import {USER} from '../queries'
 
 const SignInFormContainer = lazy(() => import('./SignInFormContainer'))
@@ -49,15 +48,7 @@ const NavigatorContainer = ({history, client}) => {
             float: 'left'
           }}
         >
-          <img
-            src={logo}
-            style={{
-              width: '50px',
-              height: '40px',
-              marginLeft: '30px'
-            }}
-            alt="logo"
-          />
+          <span>Pets</span>
         </Menu.Item>
         {token && (
           <Menu.Item key="home" onClick={() => history.push('/')}>
@@ -77,7 +68,7 @@ const NavigatorContainer = ({history, client}) => {
           <SubMenu
             title={
               <span className="submenu-title-wrapper">
-                <Query query={USER} variables={{token: token}}>
+                <Query query={USER} variables={{token}}>
                   {({loading, data: {user}}) => {
                     if (loading) return null
                     return (

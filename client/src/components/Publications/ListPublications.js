@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {compose} from 'recompose'
 import {withRouter} from 'react-router-dom'
 import {Avatar, Layout, List, Row, Col, Button} from 'antd'
@@ -8,18 +8,22 @@ import {LIST_PUBLICATIONS, REMOVE_PUBLICATION} from '../../queries'
 import withUser from '../../HOC/withUser'
 import DeleteMutation from '../Form/DeleteMutation'
 
-import {ContentCardPublications, CenterContent} from '../../styled/'
+import {
+  AlertMessage,
+  ContentCardPublications,
+  CenterContent
+} from '../../styled/'
 
 const {Content} = Layout
 
-function onLoadMore(fetchMore, {listPublications}) {
-  console.log('Load more!')
+function onLoadMore(fetchMore, listPublications, setLoadMore) {
   return fetchMore({
     variables: {
       offset: listPublications.length
     },
     updateQuery: (prev, {fetchMoreResult}) => {
       if (!fetchMoreResult) return prev
+      if (fetchMoreResult.listPublications.length === 0) setLoadMore(false)
       return {
         prev,
         ...{
@@ -33,9 +37,23 @@ function onLoadMore(fetchMore, {listPublications}) {
   })
 }
 
-function ListPublication({user, history}) {
+function renderFetchmore(fetchMore, {listPublications}, setLoadMore) {
   return (
-    <Query query={LIST_PUBLICATIONS} variables={{limit: 3, offset: 0}}>
+    <CenterContent>
+      <Button
+        onClick={() => onLoadMore(fetchMore, listPublications, setLoadMore)}
+      >
+        Fetch More
+      </Button>
+    </CenterContent>
+  )
+}
+
+function ListPublication({user, history}) {
+  const [loadMore, setLoadMore] = useState(true)
+
+  return (
+    <Query query={LIST_PUBLICATIONS} variables={{limit: 5, offset: 0}}>
       {({data, loading, fetchMore, refetch}) => {
         if (loading) return null
         return (
@@ -112,11 +130,8 @@ function ListPublication({user, history}) {
                   )
                 }}
               />
-              <CenterContent>
-                <Button onClick={() => onLoadMore(fetchMore, data)}>
-                  Fetch More!
-                </Button>
-              </CenterContent>
+              {loadMore && renderFetchmore(fetchMore, data, setLoadMore)}
+              {!loadMore && <AlertMessage>No more publications..</AlertMessage>}
             </Content>
           </ContentCardPublications>
         )

@@ -33,7 +33,7 @@ function CreatePublication(props) {
       refetchQueries={() => [
         {
           query: LIST_PUBLICATIONS,
-          variables: {offset: 0, limit: 3}
+          variables: {offset: 0, limit: 5}
         }
       ]}
     >
